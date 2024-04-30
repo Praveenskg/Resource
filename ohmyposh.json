@@ -27,6 +27,7 @@
           "properties": {
             "folder_icon": "\ue62a",
             "folder_separator_icon": " \ue0b1 ",
+            "home_icon": "\ue70f",
             "style": "full"
           },
           "style": "powerline",
