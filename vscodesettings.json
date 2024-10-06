@@ -5,7 +5,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "reactSnippets.settings.importReactOnTop": false,
   "editor.mouseWheelZoom": true,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
@@ -42,29 +41,40 @@
   "git.autofetch": true,
   "explorer.confirmDragAndDrop": false,
   "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.css-language-features"
   },
   "git.confirmSync": false,
   "files.associations": {
     ".env*": "dotenv"
   },
   "editor.tokenColorCustomizations": {
-    "textMateRules": []
+    "textMateRules": [
+      {
+        "scope": "keyword.other.dotenv",
+        "settings": {
+          "foreground": "#FF000000"
+        }
+      }
+    ]
   },
-  "dotenv.enableAutocloaking": false,
+  "dotenv.enableAutocloaking": true,
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "cSpell.userWords": [
-    "formik",
-    "nextjs",
-    "tailwindcss",
-    "openai",
     "firestore",
-    "tiktoken",
+    "formik",
+    "headlessui",
+    "joshnik",
+    "langchain",
     "lucide",
+    "nextjs",
+    "openai",
+    "praveen",
+    "Seema",
     "signup",
-    "joshnik"
+    "tailwindcss",
+    "tiktoken"
   ],
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -72,11 +82,23 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "security.workspace.trust.untrustedFiles": "open",
   "terminal.integrated.defaultProfile.windows": "PowerShell",
-  "terminal.integrated.fontFamily": "Hack Nerd Font",
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font",
   "git.openRepositoryInParentFolders": "never",
   "terminal.integrated.env.windows": {},
   "console-ninja.featureSet": "Community",
-  "cSpell.words": ["headlessui"],
   "editor.renderWhitespace": "all",
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "terminal.integrated.fontWeight": "normal",
+  "terminal.integrated.fontSize": 11,
+  "reactSnippets.settings.importReactOnTop": false,
+  "reactSnippets.settings.prettierEnabled": true,
+  "explorer.confirmPasteNative": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "explorer.confirmDelete": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  }
 }
