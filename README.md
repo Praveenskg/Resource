@@ -21,6 +21,7 @@ Run The GPG
 ## Git Command
 
 ```bash
+    git checkout -b (brach name) origin/(branch name)
     git rebase branch name
     git checkout branch name
     git stash
