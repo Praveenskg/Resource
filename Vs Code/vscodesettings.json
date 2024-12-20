@@ -16,8 +16,7 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "workbench.startupEditor": "none",
-  "window.zoomLevel": 1,
-  "editor.fontFamily": "Fira Code",
+  "editor.fontFamily": "FiraCode Nerd Font Mono, monospace",
   "editor.minimap.scale": 2,
   "editor.minimap.autohide": true,
   "editor.minimap.renderCharacters": false,
@@ -34,7 +33,7 @@
   },
   "terminal.integrated.enableMultiLinePasteWarning": "never",
   "css.lint.unknownAtRules": "ignore",
-  "cSpell.enableFiletypes": ["tailwindcss"],
+  "#cSpell.enableFiletypes": ["tailwindcss"],
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -48,36 +47,70 @@
     ".env*": "dotenv"
   },
   "editor.tokenColorCustomizations": {
-    "textMateRules": [
-      {
-        "scope": "keyword.other.dotenv",
-        "settings": {
-          "foreground": "#FF000000"
+    "[*Light*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#000"
+          }
         }
-      }
-    ]
+      ]
+    },
+    "[*Dark*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#fff"
+          }
+        }
+      ]
+    },
+    "textMateRules": []
   },
-  "dotenv.enableAutocloaking": true,
+  "dotenv.enableAutocloaking": false,
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "cSpell.userWords": [
+    "chakra",
+    "daisyui",
+    "donot",
+    "dotenv",
+    "dreamhome",
+    "dspy",
+    "FASTAPI",
+    "Fira",
     "firestore",
     "formik",
     "headlessui",
+    "hookform",
+    "hset",
+    "indiranagar",
     "joshnik",
+    "Kolkata",
+    "Koramangala",
     "langchain",
+    "loguru",
     "lucide",
     "nextjs",
     "openai",
     "praveen",
+    "pydantic",
+    "pymongo",
     "Seema",
     "signup",
+    "sqft",
+    "supabase",
     "tailwindcss",
-    "tiktoken"
+    "tiktoken",
+    "uvicorn",
+    "Varshini",
+    "venv"
   ],
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "typescript.updateImportsOnFileMove.enabled": "always",
   "security.workspace.trust.untrustedFiles": "open",
@@ -90,15 +123,46 @@
   "editor.tabSize": 2,
   "terminal.integrated.fontWeight": "normal",
   "terminal.integrated.fontSize": 11,
-  "reactSnippets.settings.importReactOnTop": false,
   "reactSnippets.settings.prettierEnabled": true,
   "explorer.confirmPasteNative": false,
-  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.ignoreTrimWhitespace": true,
   "explorer.confirmDelete": false,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    "diffEditor.ignoreTrimWhitespace": false
+  },
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [],
+      "icon": "terminal-cmd"
+    },
+    "Git Bash": {
+      "source": "Git Bash"
+    },
+    "Windows PowerShell": {
+      "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    }
+  },
+  "svg.preview.mode": "svg",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "python.createEnvironment.trigger": "off",
+  "eslint.rules.customizations": [],
+  "workbench.settings.applyToAllProfiles": [
+    "reactSnippets.settings.importReactOnTop"
+  ],
+  "reactSnippets.settings.importReactOnTop": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
   }
 }
