@@ -26,6 +26,9 @@ Create Powershell Profile
 ```bash
  notepad $PROFILE
 ```
+```bash
+New-Item -Path $PROFILE -Type File -Force
+```
 Install terminal-icon
 
 ```bash
