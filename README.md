@@ -29,6 +29,10 @@ git checkout -b (branch name)
 git checkout (branch name)
 git switch main
 
+# Switch to main branch and pull latest changes
+git checkout main
+git pull origin main
+
 # Push the branch to remote repository
 git push -u origin (branch name)
 
@@ -70,6 +74,9 @@ git merge (branch name)
 
 # Rebase a branch
 git rebase (branch name)
+
+# Rebase current branch with main
+git rebase main
 ```
 
 ### Undoing Changes
