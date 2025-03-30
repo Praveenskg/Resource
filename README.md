@@ -23,6 +23,8 @@ git add -A
 ```bash
 # Create and switch to a new branch
 git checkout -b (branch name)
+# push the branch to  remote repo
+git push -u origin (branch name)
 
 # Rebase a branch
 git rebase (branch name)
