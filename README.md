@@ -19,7 +19,10 @@ mv FolderName directory
 ```
 
 ## Git Commands
-
+```bash
+# create a empty commit 
+git commit --allow-empty -m "Your commit message"
+```
 ### Branch Management
 ```bash
 # Create and switch to a new branch
