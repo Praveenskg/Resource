@@ -161,3 +161,37 @@ git checkout HEAD -- (file name)
 # View commit history with full details
 git log --graph --decorate --all --oneline
 ```
+### Fixing an Issue (Best Practice Workflow) 
+```bash  
+# 1. Switch to main and pull latest changes
+git checkout main
+git pull origin main
+
+# 2. Create a new branch for the fix
+git checkout -b fix/your-issue-name
+# or using switch
+git switch -c fix/your-issue-name
+
+# 3. Make your code changes (in VS Code or editor)
+
+# 4. Stage your changes
+git add .
+
+# 5. Commit your changes with a descriptive message
+git commit -m "message"
+
+# 6. Push your branch to remote
+git push -u origin fix/your-issue-name
+
+# 7. Create a Pull Request (PR) on GitHub
+# - Title: fix: align mobile layout
+# - Description: Fixes #issue_number with screenshots if needed
+
+# 8. Wait for review or bot to check (like ReviewDog or CI)
+
+# 9. After approval, merge your PR into main
+
+# 10. Clean up: delete the branch locally and remotely
+git branch -d fix/your-issue-name
+git push origin --delete fix/your-issue-name
+```
