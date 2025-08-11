@@ -4,7 +4,7 @@ Resources That is used in daily life of developer
 
 ## Use it to return empty data
 
-```bash
+```js
 Array.from({length:10}).map((_,i)=><Component key={i}/>);
 ```
 
