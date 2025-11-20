@@ -1,0 +1,20 @@
+# Production Dependencies
+flask==2.3.0
+requests==2.31.0
+python-dotenv==1.0.0
+
+# Database
+psycopg2-binary==2.9.7
+sqlalchemy==2.0.20
+
+# Development Dependencies
+pytest==7.4.0
+pytest-cov==4.1.0
+black==23.7.0
+flake8==6.1.0
+mypy==1.5.1
+
+# Format: package-name==version
+# Use >= for minimum version
+# Use ~= for compatible release
+

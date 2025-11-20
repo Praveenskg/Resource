@@ -113,6 +113,153 @@ Quick reference materials for common tasks.
 ### 📁 [Templates](./Templates/)
 Project starter templates and boilerplates.
 
+### 🧪 [Testing](./Testing/)
+Testing frameworks and patterns (Jest, Vitest, Playwright, Cypress).
+- Unit testing configurations
+- E2E testing patterns
+- Test utilities and mocks
+- Coverage setup
+
+### 🎨 [Web Development](./Web-Development/)
+HTML, CSS, and modern web development patterns.
+- HTML/CSS snippets
+- Tailwind CSS utilities
+- Flexbox and Grid examples
+- Responsive design patterns
+
+### 🐍 [Python](./Python/)
+Python commands, patterns, and best practices.
+- Virtual environment setup
+- Package management (pip, poetry)
+- Testing with pytest
+- Common Python patterns
+
+### ☸️ [DevOps](./DevOps/)
+Kubernetes, Terraform, and Infrastructure as Code.
+- Kubernetes commands and manifests
+- Terraform configurations
+- Infrastructure patterns
+
+### 📊 [Monitoring & Logging](./Monitoring-Logging/)
+Logging patterns, monitoring tools, and observability.
+- Winston and Pino logging
+- Prometheus and Grafana
+- Error tracking (Sentry)
+- APM tools
+
+### 🔌 [GraphQL](./GraphQL/)
+GraphQL queries, mutations, and best practices.
+- Query and mutation patterns
+- Schema definitions
+- Apollo Client examples
+
+### 🔄 [WebSocket](./WebSocket/)
+WebSocket connection patterns and real-time communication.
+- Native WebSocket examples
+- Socket.io patterns
+- Connection management
+
+### 💾 [Caching](./Caching/)
+Redis, Memcached, and caching strategies.
+- Redis commands and patterns
+- Cache invalidation strategies
+- CDN configuration
+
+### 📁 [File Handling](./File-Handling/)
+File upload, processing, and optimization patterns.
+- File upload patterns
+- Image processing
+- PDF generation
+
+### 📧 [Email](./Email/)
+Email templates, SMTP configuration, and sending patterns.
+- HTML/text email templates
+- SMTP configuration
+- Email service integration
+
+### 🔧 [Troubleshooting](./Troubleshooting/)
+Common errors, solutions, and debugging tips.
+- Common error solutions
+- Debugging guides
+- Performance troubleshooting
+
+### 🧮 [Algorithms](./Algorithms/)
+Common algorithms, data structures, and problem-solving patterns.
+- Sorting and search algorithms
+- Data structures examples
+- Complexity analysis
+
+### 🏗️ [Design Patterns](./Design-Patterns/)
+Software design patterns and best practices.
+- Creational patterns
+- Structural patterns
+- Behavioral patterns
+
+### 🔐 [Environment Variables](./Environment-Variables/)
+Environment variable management and best practices.
+- .env file management
+- Configuration patterns
+- Secret management
+
+### 📝 [Markdown](./Markdown/)
+Markdown cheatsheet and documentation patterns.
+- Markdown syntax reference
+- Documentation templates
+- JSDoc examples
+
+### 🎯 [API Design](./API-Design/)
+RESTful API design patterns and best practices.
+- REST principles
+- API versioning strategies
+- Rate limiting patterns
+- OpenAPI/Swagger documentation
+
+### 🗄️ [ORM Patterns](./ORM-Patterns/)
+Prisma, TypeORM, and Sequelize patterns.
+- Prisma examples
+- TypeORM patterns
+- Sequelize queries
+- Database migrations
+
+### 🎭 [State Management](./State-Management/)
+Redux, Zustand, Context API, and state management patterns.
+- Redux Toolkit patterns
+- Zustand examples
+- Context API patterns
+
+### 🌍 [Internationalization](./Internationalization/)
+i18n setup, translation management, and locale handling.
+- React i18next setup
+- Next.js i18n
+- Locale handling
+- Date/time formatting
+
+### 📱 [Mobile Development](./Mobile-Development/)
+React Native patterns and mobile development resources.
+- React Native components
+- Mobile API patterns
+- Push notifications
+
+### 🔍 [Search](./Search/)
+Elasticsearch, Algolia, and full-text search patterns.
+- Elasticsearch queries
+- Algolia integration
+- Search optimization
+
+### 🎨 [UI Components](./UI-Components/)
+Form validation, modals, loading states, and error handling patterns.
+- Form validation patterns
+- Modal/dialog components
+- Loading states
+- Error handling UI
+
+### 📦 [Build Tools](./Build-Tools/)
+Webpack, Vite, Rollup configurations and build optimization.
+- Webpack configuration
+- Vite setup
+- Rollup configuration
+- Build optimization
+
 ### 🐧 [Linux](./Linux/)
 Linux commands cheat sheet for daily operations.
 
