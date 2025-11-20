@@ -1,29 +1,139 @@
-# Resources
+# 🚀 Developer Resources
 
-Resources That is used in daily life of developer
+A comprehensive collection of resources, commands, configurations, and templates used in daily development life.
 
-## Use it to return empty data
+## 📚 Table of Contents
+
+- [Quick Reference](#quick-reference)
+- [Directory Structure](#directory-structure)
+- [Git Commands](#git-commands)
+- [Terminal Commands](#terminal-commands)
+- [Code Snippets](#code-snippets)
+- [Contributing](#contributing)
+
+---
+
+## 🎯 Quick Reference
+
+### Common Code Snippets
 
 ```js
+// Generate empty array for rendering components
 Array.from({length:10}).map((_,i)=><Component key={i}/>);
 ```
 
-## Terminal Commands
+---
 
-```bash
-# Start the GPG agent daemon
-gpg-agent --daemon
+## 📁 Directory Structure
 
-# Move a folder to another directory
-mv FolderName directory
-```
+### 🐳 [Docker](./Docker/)
+Docker commands, docker-compose templates, and Dockerfile examples.
+- Container management commands
+- Docker Compose configuration
+- Multi-stage build templates
 
-## Git Commands
-```bash
-# create a empty commit 
-git commit --allow-empty -m "Your commit message"
-```
+### 🗄️ [Database](./Database/)
+Database commands and queries for PostgreSQL, MongoDB, MySQL, and more.
+- SQL commands and patterns
+- PostgreSQL advanced queries
+- MongoDB operations
+- Backup and restore procedures
+
+### 📦 [Node](./Node/)
+Node.js and package manager commands (npm, pnpm, yarn, bun).
+- Package management commands
+- package.json templates
+- .npmrc configuration examples
+
+### 🔧 [Scripts](./Scripts/)
+Automation scripts for development environment setup.
+- Development environment setup
+- Tool installation scripts
+- Configuration backup utilities
+
+### 🌐 [API](./API/)
+HTTP tools, API testing, and status codes reference.
+- curl command examples
+- HTTP status codes
+- API testing patterns
+
+### 🔍 [Regex](./Regex/)
+Regular expressions and text processing tools.
+- Common regex patterns
+- sed and awk examples
+- Text manipulation commands
+
+### 🔐 [SSH](./SSH/)
+SSH configuration, key generation, and remote access guides.
+- SSH key generation
+- SSH config examples
+- Port forwarding
+- File transfer (SCP, rsync)
+
+### 🚀 [CI-CD](./CI-CD/)
+Continuous Integration and Continuous Deployment workflows.
+- GitHub Actions workflows
+- GitLab CI configurations
+- Deployment pipelines
+
+### 💻 [Snippets](./Snippets/)
+Reusable code snippets and templates.
+- React component templates
+- Next.js patterns
+- TypeScript utility types
+
+### ⚡ [Performance](./Performance/)
+Performance optimization and debugging guides.
+- Debugging techniques
+- Profiling tools
+- Performance metrics
+
+### 🔒 [Security](./Security/)
+Security best practices and GPG setup.
+- Authentication patterns
+- Input validation
+- GPG key management
+
+### ☁️ [Cloud](./Cloud/)
+Cloud platform commands and deployment guides.
+- AWS CLI commands
+- Vercel deployment
+- Netlify configuration
+
+### ⚙️ [Configs](./Configs/)
+Common configuration files for projects.
+- .editorconfig
+- .prettierrc.json
+- .eslintrc.json
+- .gitignore
+
+### 📋 [Cheat-Sheets](./Cheat-Sheets/)
+Quick reference materials for common tasks.
+
+### 📁 [Templates](./Templates/)
+Project starter templates and boilerplates.
+
+### 🐧 [Linux](./Linux/)
+Linux commands cheat sheet for daily operations.
+
+### 💻 [VS Code](./Vs%20Code/)
+VS Code settings, extensions, and configuration.
+
+### 🎨 [Oh My Posh](./Oh%20My%20Posh/)
+Terminal customization with Oh My Posh.
+
+### 🐚 [Oh my Zsh](./Oh%20my%20Zsh/)
+Zsh shell configuration and aliases.
+
+### 💾 [PowerShell](./PowerShell/)
+PowerShell and Windows Terminal configuration.
+
+---
+
+## 🔧 Git Commands
+
 ### Branch Management
+
 ```bash
 # Create and switch to a new branch
 git checkout -b (branch name)
@@ -47,6 +157,7 @@ git push origin --delete (branch name)
 ```
 
 ### Staging and Committing
+
 ```bash
 # Add all changes to staging
 git add -A
@@ -56,9 +167,13 @@ git commit -m "Commit message"
 
 # Amend the last commit message
 git commit --amend -m "New commit message"
+
+# Create an empty commit
+git commit --allow-empty -m "Your commit message"
 ```
 
 ### Pushing and Pulling Changes
+
 ```bash
 # Push changes to the remote repository
 git push origin (branch name)
@@ -71,6 +186,7 @@ git fetch --all
 ```
 
 ### Merging and Rebasing
+
 ```bash
 # Merge another branch into the current branch
 git merge (branch name)
@@ -83,6 +199,7 @@ git rebase main
 ```
 
 ### Undoing Changes
+
 ```bash
 # Reset the last commit (soft reset, keeps changes staged)
 git reset --soft HEAD~1
@@ -98,6 +215,7 @@ git reset (file name)
 ```
 
 ### Stashing Changes
+
 ```bash
 # Stash changes
 git stash
@@ -107,6 +225,7 @@ git stash pop
 ```
 
 ### Checking Repository Status
+
 ```bash
 # Check the status of the repository
 git status
@@ -122,6 +241,7 @@ git remote -v
 ```
 
 ### Cleaning Up
+
 ```bash
 # Cleanup branches
 git branch cleanup
@@ -131,6 +251,7 @@ git clean -df
 ```
 
 ### Best Practices
+
 ```bash
 # Configure user details
 git config --global user.name "Your Name"
@@ -161,8 +282,10 @@ git checkout HEAD -- (file name)
 # View commit history with full details
 git log --graph --decorate --all --oneline
 ```
-### Fixing an Issue (Best Practice Workflow) 
-```bash  
+
+### Fixing an Issue (Best Practice Workflow)
+
+```bash
 # 1. Switch to main and pull latest changes
 git checkout main
 git pull origin main
@@ -195,3 +318,46 @@ git push -u origin fix/your-issue-name
 git branch -d fix/your-issue-name
 git push origin --delete fix/your-issue-name
 ```
+
+---
+
+## 💻 Terminal Commands
+
+```bash
+# Start the GPG agent daemon
+gpg-agent --daemon
+
+# Move a folder to another directory
+mv FolderName directory
+```
+
+For more terminal commands, see the [Linux](./Linux/) directory.
+
+---
+
+## 📝 Code Snippets
+
+### React/JavaScript
+
+```js
+// Generate empty array for rendering components
+Array.from({length:10}).map((_,i)=><Component key={i}/>);
+```
+
+For more code snippets and templates, check the [Snippets](./Snippets/) directory.
+
+---
+
+## 🤝 Contributing
+
+Feel free to add more resources, update existing ones, or suggest improvements. This repository is meant to be a living collection of developer resources.
+
+---
+
+## 📄 License
+
+This repository is open source and available for personal use.
+
+---
+
+> Created with ❤️ by Praveen Singh
