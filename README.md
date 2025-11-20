@@ -1,279 +1,391 @@
 # 🚀 Developer Resources
 
-A comprehensive collection of resources, commands, configurations, and templates used in daily development life.
+> A comprehensive collection of resources, commands, configurations, and templates used in daily development life.
 
-## 📚 Table of Contents
-
-- [Quick Reference](#quick-reference)
-- [Directory Structure](#directory-structure)
-- [Git Commands](#git-commands)
-- [Terminal Commands](#terminal-commands)
-- [Code Snippets](#code-snippets)
-- [Contributing](#contributing)
+[![Resources](https://img.shields.io/badge/resources-38+-blue)](./README.md)
+[![Topics](https://img.shields.io/badge/topics-30+-green)](./README.md)
+[![License](https://img.shields.io/badge/license-MIT-orange)](./README.md)
 
 ---
 
-## 🎯 Quick Reference
+## 📋 Table of Contents
 
-### Common Code Snippets
+- [Overview](#-overview)
+- [Features](#-features)
+- [Quick Start](#-quick-start)
+- [Directory Structure](#-directory-structure)
+  - [Development Tools](#development-tools)
+  - [Frameworks & Libraries](#frameworks--libraries)
+  - [DevOps & Infrastructure](#devops--infrastructure)
+  - [Testing & Quality](#testing--quality)
+  - [Configuration & Setup](#configuration--setup)
+- [Git Commands](#-git-commands)
+- [Terminal Commands](#-terminal-commands)
+- [Code Snippets](#-code-snippets)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-```js
-// Generate empty array for rendering components
-Array.from({length:10}).map((_,i)=><Component key={i}/>);
+---
+
+## 🎯 Overview
+
+This repository is a curated collection of developer resources covering **38+ topics** with **100+ files** including:
+
+- 📝 **Commands & Cheat Sheets** - Quick reference for daily operations
+- ⚙️ **Configuration Files** - Ready-to-use configs for popular tools
+- 💻 **Code Snippets** - Reusable templates and patterns
+- 🚀 **CI/CD Workflows** - GitHub Actions and GitLab CI examples
+- 🐳 **Docker & DevOps** - Containerization and infrastructure patterns
+- 🗄️ **Database Queries** - SQL, NoSQL, and ORM patterns
+- 🧪 **Testing Frameworks** - Jest, Vitest, Playwright, Cypress
+- ☁️ **Cloud Platforms** - AWS, Vercel, Netlify deployment guides
+- 🔒 **Security Practices** - Best practices and GPG setup
+- ⚡ **Performance** - Debugging, profiling, and optimization guides
+
+---
+
+## ✨ Features
+
+- ✅ **Comprehensive Coverage** - 38+ directories covering all aspects of development
+- ✅ **Ready-to-Use** - Copy-paste configurations and templates
+- ✅ **Well-Documented** - Each directory includes detailed README files
+- ✅ **Practical Examples** - Real-world code snippets and patterns
+- ✅ **Best Practices** - Industry-standard approaches and conventions
+- ✅ **Cross-Platform** - Resources for Linux, macOS, and Windows
+- ✅ **Multiple Languages** - JavaScript, TypeScript, Python, and more
+- ✅ **Regular Updates** - Continuously updated with new resources
+
+---
+
+## 🚀 Quick Start
+
+### Browse by Category
+
+- **Need Docker commands?** → [Docker](./Docker/)
+- **Setting up CI/CD?** → [CI-CD](./CI-CD/)
+- **Database queries?** → [Database](./Database/)
+- **Testing setup?** → [Testing](./Testing/)
+- **API design?** → [API Design](./API-Design/)
+- **Configuration files?** → [Configs](./Configs/)
+
+### Copy Configuration Files
+
+```bash
+# Copy Prettier config
+cp Configs/.prettierrc.json ./your-project/
+
+# Copy ESLint config
+cp Configs/.eslintrc.json ./your-project/
+
+# Copy EditorConfig
+cp Configs/.editorconfig ./your-project/
+```
+
+### Use Automation Scripts
+
+```bash
+# Setup development environment
+cd Scripts/
+chmod +x setup-dev-env.sh
+./setup-dev-env.sh
 ```
 
 ---
 
 ## 📁 Directory Structure
 
-### 🐳 [Docker](./Docker/)
+### Development Tools
+
+#### 🐳 [Docker](./Docker/)
 Docker commands, docker-compose templates, and Dockerfile examples.
 - Container management commands
 - Docker Compose configuration
 - Multi-stage build templates
 
-### 🗄️ [Database](./Database/)
+#### 🗄️ [Database](./Database/)
 Database commands and queries for PostgreSQL, MongoDB, MySQL, and more.
 - SQL commands and patterns
 - PostgreSQL advanced queries
 - MongoDB operations
 - Backup and restore procedures
 
-### 📦 [Node](./Node/)
+#### 📦 [Node](./Node/)
 Node.js and package manager commands (npm, pnpm, yarn, bun).
 - Package management commands
 - package.json templates
 - .npmrc configuration examples
 
-### 🔧 [Scripts](./Scripts/)
+#### 🔧 [Scripts](./Scripts/)
 Automation scripts for development environment setup.
 - Development environment setup
 - Tool installation scripts
 - Configuration backup utilities
 
-### 🌐 [API](./API/)
-HTTP tools, API testing, and status codes reference.
-- curl command examples
-- HTTP status codes
-- API testing patterns
-
-### 🔍 [Regex](./Regex/)
-Regular expressions and text processing tools.
-- Common regex patterns
-- sed and awk examples
-- Text manipulation commands
-
-### 🔐 [SSH](./SSH/)
+#### 🔐 [SSH](./SSH/)
 SSH configuration, key generation, and remote access guides.
 - SSH key generation
 - SSH config examples
 - Port forwarding
 - File transfer (SCP, rsync)
 
-### 🚀 [CI-CD](./CI-CD/)
-Continuous Integration and Continuous Deployment workflows.
-- GitHub Actions workflows
-- GitLab CI configurations
-- Deployment pipelines
+#### 🐧 [Linux](./Linux/)
+Linux commands cheat sheet for daily operations.
+- File and directory operations
+- System management
+- Network commands
+- Package management
 
-### 💻 [Snippets](./Snippets/)
+---
+
+### Frameworks & Libraries
+
+#### 💻 [Snippets](./Snippets/)
 Reusable code snippets and templates.
 - React component templates
 - Next.js patterns
 - TypeScript utility types
 
-### ⚡ [Performance](./Performance/)
-Performance optimization and debugging guides.
-- Debugging techniques
-- Profiling tools
-- Performance metrics
-
-### 🔒 [Security](./Security/)
-Security best practices and GPG setup.
-- Authentication patterns
-- Input validation
-- GPG key management
-
-### ☁️ [Cloud](./Cloud/)
-Cloud platform commands and deployment guides.
-- AWS CLI commands
-- Vercel deployment
-- Netlify configuration
-
-### ⚙️ [Configs](./Configs/)
-Common configuration files for projects.
-- .editorconfig
-- .prettierrc.json
-- .eslintrc.json
-- .gitignore
-
-### 📋 [Cheat-Sheets](./Cheat-Sheets/)
-Quick reference materials for common tasks.
-
-### 📁 [Templates](./Templates/)
-Project starter templates and boilerplates.
-
-### 🧪 [Testing](./Testing/)
-Testing frameworks and patterns (Jest, Vitest, Playwright, Cypress).
-- Unit testing configurations
-- E2E testing patterns
-- Test utilities and mocks
-- Coverage setup
-
-### 🎨 [Web Development](./Web-Development/)
+#### 🎨 [Web Development](./Web-Development/)
 HTML, CSS, and modern web development patterns.
 - HTML/CSS snippets
 - Tailwind CSS utilities
 - Flexbox and Grid examples
 - Responsive design patterns
 
-### 🐍 [Python](./Python/)
+#### 🐍 [Python](./Python/)
 Python commands, patterns, and best practices.
 - Virtual environment setup
 - Package management (pip, poetry)
 - Testing with pytest
 - Common Python patterns
 
-### ☸️ [DevOps](./DevOps/)
-Kubernetes, Terraform, and Infrastructure as Code.
-- Kubernetes commands and manifests
-- Terraform configurations
-- Infrastructure patterns
-
-### 📊 [Monitoring & Logging](./Monitoring-Logging/)
-Logging patterns, monitoring tools, and observability.
-- Winston and Pino logging
-- Prometheus and Grafana
-- Error tracking (Sentry)
-- APM tools
-
-### 🔌 [GraphQL](./GraphQL/)
+#### 🔌 [GraphQL](./GraphQL/)
 GraphQL queries, mutations, and best practices.
 - Query and mutation patterns
 - Schema definitions
 - Apollo Client examples
 
-### 🔄 [WebSocket](./WebSocket/)
+#### 🔄 [WebSocket](./WebSocket/)
 WebSocket connection patterns and real-time communication.
 - Native WebSocket examples
 - Socket.io patterns
 - Connection management
 
-### 💾 [Caching](./Caching/)
-Redis, Memcached, and caching strategies.
-- Redis commands and patterns
-- Cache invalidation strategies
-- CDN configuration
-
-### 📁 [File Handling](./File-Handling/)
-File upload, processing, and optimization patterns.
-- File upload patterns
-- Image processing
-- PDF generation
-
-### 📧 [Email](./Email/)
-Email templates, SMTP configuration, and sending patterns.
-- HTML/text email templates
-- SMTP configuration
-- Email service integration
-
-### 🔧 [Troubleshooting](./Troubleshooting/)
-Common errors, solutions, and debugging tips.
-- Common error solutions
-- Debugging guides
-- Performance troubleshooting
-
-### 🧮 [Algorithms](./Algorithms/)
-Common algorithms, data structures, and problem-solving patterns.
-- Sorting and search algorithms
-- Data structures examples
-- Complexity analysis
-
-### 🏗️ [Design Patterns](./Design-Patterns/)
-Software design patterns and best practices.
-- Creational patterns
-- Structural patterns
-- Behavioral patterns
-
-### 🔐 [Environment Variables](./Environment-Variables/)
-Environment variable management and best practices.
-- .env file management
-- Configuration patterns
-- Secret management
-
-### 📝 [Markdown](./Markdown/)
-Markdown cheatsheet and documentation patterns.
-- Markdown syntax reference
-- Documentation templates
-- JSDoc examples
-
-### 🎯 [API Design](./API-Design/)
-RESTful API design patterns and best practices.
-- REST principles
-- API versioning strategies
-- Rate limiting patterns
-- OpenAPI/Swagger documentation
-
-### 🗄️ [ORM Patterns](./ORM-Patterns/)
+#### 🗄️ [ORM Patterns](./ORM-Patterns/)
 Prisma, TypeORM, and Sequelize patterns.
 - Prisma examples
 - TypeORM patterns
 - Sequelize queries
 - Database migrations
 
-### 🎭 [State Management](./State-Management/)
+#### 🎭 [State Management](./State-Management/)
 Redux, Zustand, Context API, and state management patterns.
 - Redux Toolkit patterns
 - Zustand examples
 - Context API patterns
 
-### 🌍 [Internationalization](./Internationalization/)
-i18n setup, translation management, and locale handling.
-- React i18next setup
-- Next.js i18n
-- Locale handling
-- Date/time formatting
-
-### 📱 [Mobile Development](./Mobile-Development/)
+#### 📱 [Mobile Development](./Mobile-Development/)
 React Native patterns and mobile development resources.
 - React Native components
 - Mobile API patterns
 - Push notifications
 
-### 🔍 [Search](./Search/)
+---
+
+### DevOps & Infrastructure
+
+#### ☸️ [DevOps](./DevOps/)
+Kubernetes, Terraform, and Infrastructure as Code.
+- Kubernetes commands and manifests
+- Terraform configurations
+- Infrastructure patterns
+
+#### 🚀 [CI-CD](./CI-CD/)
+Continuous Integration and Continuous Deployment workflows.
+- GitHub Actions workflows
+- GitLab CI configurations
+- Deployment pipelines
+
+#### ☁️ [Cloud](./Cloud/)
+Cloud platform commands and deployment guides.
+- AWS CLI commands
+- Vercel deployment
+- Netlify configuration
+
+#### 📊 [Monitoring & Logging](./Monitoring-Logging/)
+Logging patterns, monitoring tools, and observability.
+- Winston and Pino logging
+- Prometheus and Grafana
+- Error tracking (Sentry)
+- APM tools
+
+#### 💾 [Caching](./Caching/)
+Redis, Memcached, and caching strategies.
+- Redis commands and patterns
+- Cache invalidation strategies
+- CDN configuration
+
+---
+
+### Testing & Quality
+
+#### 🧪 [Testing](./Testing/)
+Testing frameworks and patterns (Jest, Vitest, Playwright, Cypress).
+- Unit testing configurations
+- E2E testing patterns
+- Test utilities and mocks
+- Coverage setup
+
+#### ⚡ [Performance](./Performance/)
+Performance optimization and debugging guides.
+- Debugging techniques
+- Profiling tools
+- Performance metrics
+
+#### 🔒 [Security](./Security/)
+Security best practices and GPG setup.
+- Authentication patterns
+- Input validation
+- GPG key management
+
+#### 🔧 [Troubleshooting](./Troubleshooting/)
+Common errors, solutions, and debugging tips.
+- Common error solutions
+- Debugging guides
+- Performance troubleshooting
+
+---
+
+### Configuration & Setup
+
+#### ⚙️ [Configs](./Configs/)
+Common configuration files for projects.
+- .editorconfig
+- .prettierrc.json
+- .eslintrc.json
+- .gitignore
+
+#### 🔐 [Environment Variables](./Environment-Variables/)
+Environment variable management and best practices.
+- .env file management
+- Configuration patterns
+- Secret management
+
+#### 💻 [VS Code](./Vs%20Code/)
+VS Code settings, extensions, and configuration.
+- Editor settings
+- Recommended extensions
+- Workspace configuration
+
+#### 🎨 [Oh My Posh](./Oh%20My%20Posh/)
+Terminal customization with Oh My Posh.
+- Theme configuration
+- Installation guide
+
+#### 🐚 [Oh my Zsh](./Oh%20my%20Zsh/)
+Zsh shell configuration and aliases.
+- Custom aliases
+- Plugin configuration
+- Prompt customization
+
+#### 💾 [PowerShell](./PowerShell/)
+PowerShell and Windows Terminal configuration.
+- Terminal settings
+- Profile configuration
+
+---
+
+### API & Communication
+
+#### 🌐 [API](./API/)
+HTTP tools, API testing, and status codes reference.
+- curl command examples
+- HTTP status codes
+- API testing patterns
+
+#### 🎯 [API Design](./API-Design/)
+RESTful API design patterns and best practices.
+- REST principles
+- API versioning strategies
+- Rate limiting patterns
+- OpenAPI/Swagger documentation
+
+#### 📧 [Email](./Email/)
+Email templates, SMTP configuration, and sending patterns.
+- HTML/text email templates
+- SMTP configuration
+- Email service integration
+
+---
+
+### Utilities & Patterns
+
+#### 🔍 [Regex](./Regex/)
+Regular expressions and text processing tools.
+- Common regex patterns
+- sed and awk examples
+- Text manipulation commands
+
+#### 📁 [File Handling](./File-Handling/)
+File upload, processing, and optimization patterns.
+- File upload patterns
+- Image processing
+- PDF generation
+
+#### 🔍 [Search](./Search/)
 Elasticsearch, Algolia, and full-text search patterns.
 - Elasticsearch queries
 - Algolia integration
 - Search optimization
 
-### 🎨 [UI Components](./UI-Components/)
+#### 🎨 [UI Components](./UI-Components/)
 Form validation, modals, loading states, and error handling patterns.
 - Form validation patterns
 - Modal/dialog components
 - Loading states
 - Error handling UI
 
-### 📦 [Build Tools](./Build-Tools/)
+#### 🌍 [Internationalization](./Internationalization/)
+i18n setup, translation management, and locale handling.
+- React i18next setup
+- Next.js i18n
+- Locale handling
+- Date/time formatting
+
+#### 📦 [Build Tools](./Build-Tools/)
 Webpack, Vite, Rollup configurations and build optimization.
 - Webpack configuration
 - Vite setup
 - Rollup configuration
 - Build optimization
 
-### 🐧 [Linux](./Linux/)
-Linux commands cheat sheet for daily operations.
+---
 
-### 💻 [VS Code](./Vs%20Code/)
-VS Code settings, extensions, and configuration.
+### Learning Resources
 
-### 🎨 [Oh My Posh](./Oh%20My%20Posh/)
-Terminal customization with Oh My Posh.
+#### 🧮 [Algorithms](./Algorithms/)
+Common algorithms, data structures, and problem-solving patterns.
+- Sorting and search algorithms
+- Data structures examples
+- Complexity analysis
 
-### 🐚 [Oh my Zsh](./Oh%20my%20Zsh/)
-Zsh shell configuration and aliases.
+#### 🏗️ [Design Patterns](./Design-Patterns/)
+Software design patterns and best practices.
+- Creational patterns
+- Structural patterns
+- Behavioral patterns
 
-### 💾 [PowerShell](./PowerShell/)
-PowerShell and Windows Terminal configuration.
+#### 📝 [Markdown](./Markdown/)
+Markdown cheatsheet and documentation patterns.
+- Markdown syntax reference
+- Documentation templates
+- JSDoc examples
+
+#### 📋 [Cheat-Sheets](./Cheat-Sheets/)
+Quick reference materials for common tasks.
+
+#### 📁 [Templates](./Templates/)
+Project starter templates and boilerplates.
 
 ---
 
@@ -497,13 +609,47 @@ For more code snippets and templates, check the [Snippets](./Snippets/) director
 
 ## 🤝 Contributing
 
-Feel free to add more resources, update existing ones, or suggest improvements. This repository is meant to be a living collection of developer resources.
+Contributions are welcome! This repository is meant to be a living collection of developer resources.
+
+### How to Contribute
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-resource`)
+3. **Add your resources** following the existing structure
+4. **Update documentation** if needed
+5. **Commit your changes** (`git commit -m 'Add amazing resource'`)
+6. **Push to the branch** (`git push origin feature/amazing-resource`)
+7. **Open a Pull Request**
+
+### Contribution Guidelines
+
+- Follow the existing directory structure
+- Include README.md files with clear documentation
+- Add practical examples and use cases
+- Keep code snippets concise and well-commented
+- Update the main README.md if adding new directories
 
 ---
 
 ## 📄 License
 
 This repository is open source and available for personal use.
+
+---
+
+## 📊 Repository Statistics
+
+- **Total Directories**: 38+
+- **Total Files**: 100+
+- **Topics Covered**: 30+
+- **Languages**: JavaScript, TypeScript, Python, Shell, YAML, JSON, Markdown
+- **Last Updated**: 2025
+
+---
+
+## 🙏 Acknowledgments
+
+Special thanks to all contributors and the open-source community for inspiration and best practices.
 
 ---
 
