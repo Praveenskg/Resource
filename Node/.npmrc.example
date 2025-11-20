@@ -1,0 +1,45 @@
+# npm configuration file
+# Copy this to .npmrc in your project root
+
+# Registry settings
+registry=https://registry.npmjs.org/
+# registry=https://registry.npmjs.org/  # Public npm registry
+# registry=https://npm.pkg.github.com    # GitHub Packages
+
+# Package installation settings
+save-exact=true                    # Save exact versions (no ^ or ~)
+package-lock=true                  # Generate package-lock.json
+engine-strict=true                  # Enforce engine requirements
+fund=false                          # Disable funding messages
+audit=false                         # Disable audit on install
+
+# Performance settings
+prefer-offline=true                 # Use cache when available
+cache-max=86400000                  # Cache max age (24 hours)
+
+# Logging
+loglevel=warn                       # warn, error, info, verbose, silly
+progress=false                      # Disable progress bar
+
+# Security
+# Save credentials (use with caution)
+# save-credentials=true
+
+# Scoped packages (for private registries)
+# @myscope:registry=https://registry.example.com
+# //registry.example.com/:_authToken=your-token-here
+
+# Proxy settings (if needed)
+# proxy=http://proxy.example.com:8080
+# https-proxy=http://proxy.example.com:8080
+
+# Git settings
+# git-tag-version=true              # Tag version in git
+# commit-hooks=true                  # Run git hooks
+
+# Other settings
+# init-author-name="Your Name"
+# init-author-email="your.email@example.com"
+# init-license="MIT"
+# init-version="1.0.0"
+
