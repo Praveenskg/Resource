@@ -1,168 +1,279 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
+# ========================
+# Terminal & Title Config
+# ========================
 print -Pn "\e]0;💻  Praveen Singh\a" 
-
 DISABLE_AUTO_TITLE="true"
+export TERMINAL="xterm-256color"
 
-# Path to your Oh My Zsh installation.
+# ========================
+# Oh My Zsh Setup
+# ========================
 export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 
 plugins=(git docker npm zsh-autosuggestions zsh-completions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
+# ========================
+# History
+# ========================
+HIST_STAMPS="yyyy-mm-dd"
 
-# User configuration
+# ========================
+# Aliases
+# ========================
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# --- File & Navigation ---
 alias ls='eza -la --icons'
 alias cls='clear'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias -- -='cd -'    # go back to previous dir
+alias c.='code .'    # open VS Code
+alias bat="batcat"
+alias ll='eza -l --icons'
+alias tree='eza --tree --icons'
+alias md='mkdir -p'
+alias rd='rm -rf'
+alias f='find . -type f -name'     # usage: f "*.js"
+alias d='find . -type d -name'     # usage: d "components"
+alias reload='source ~/.zshrc'     # reload zsh quickly
+alias ..2='cd ../../'
+alias ..3='cd ../../../'
+alias sz='source ~/.zshrc'
+alias paths='echo $PATH | tr ":" "\n"'
+alias usage='du -sh *'   # show folder sizes
+alias whichp='which -a'  # show all executable paths
 
-# Function to get current Git branch
+
+# --- Git Shortcuts ---
+# Git aliases - optimized & switch-friendly
+
+# basic
+alias gs='git status'
+alias gss='git status -s'
+alias gl='git log --oneline --graph --decorate --all'
+alias gshow='git show'
+alias gdiff='git diff'
+alias gstats='git diff --stat'
+
+# add / commit / amend
+alias ga='git add .'                 # add all new/modified (same as before)
+alias gau='git add -u'               # update tracked files only
+alias gamend='git commit --amend --no-edit'
+alias gcm='git commit -m'            # normal commit
+alias gc='git commit -S -m'          # signed commit with message
+alias gcse='git commit -S --allow-empty -m'
+
+# branch & switching (use git switch)
+alias gsw='git switch'
+alias gcb='git switch -c'            # create & switch to new branch (was checkout -b)
+alias gb='git branch'
+alias gba='git branch -a'
+alias gbd='git branch -D'
+alias gtags='git tag -l'
+
+# fetch / pull / push
+alias gfetch='git fetch --all --prune'
+alias gpl='git pull'
+alias gplr='git pull --rebase'
+alias gp='git push'
+alias gpf='git push -f'
+# safer force-with-lease push
+alias gpfl='git push --force-with-lease'
+
+# clone / remote
+alias gcl='git clone'
+alias gremote='git remote -v'
+
+# stash
+alias gstash='git stash push -m'
+alias gstashp='git stash pop'
+
+# undo / resets (kept distinct)
+alias gundo='git reset --soft HEAD~1'      # undo last commit but keep changes (soft)
+alias gundo-hard='git reset --hard HEAD~1' # destructive - undo and drop changes
+alias gundo-mixed='git reset HEAD~1'       # mixed reset
+
+# cleanup & utilities
+alias gclean='git fetch --prune && git branch --merged | grep -v "\*" | xargs -r -n 1 git branch -D'
+alias gcount='git rev-list --all --count'
+alias gfetchprune='git fetch --prune'
+
+# misc
+alias gst='git status'   # convenience (optional duplicate)
+
+
+
+# --- Docker Helpers ---
+alias dps='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
+alias dstop='docker stop $(docker ps -q)'
+alias drm='docker rm -f $(docker ps -aq)'
+alias dprune='docker system prune -af --volumes'
+alias docker-clean='docker rm -f $(docker ps -aq) 2>/dev/null'
+alias dimg='docker images'
+alias dnet='docker network ls'
+alias dlogs='docker logs -f'
+alias dbash='docker exec -it'   # usage: dbash container-name bash
+
+# --- NPM / PNPM ---
+alias dev='npm run dev'
+alias ni='npm install'
+alias nr='npm run'
+alias nrb='npm run build'
+alias nrt='npm run test'
+alias nrs='npm run start'
+alias pi='pnpm install'
+alias pr='pnpm run'
+alias format='npm run format'
+alias clean='npm run clean'
+alias start='npm start'
+alias nuke='rm -rf node_modules package-lock.json pnpm-lock.yaml yarn.lock'
+alias reinstall='nuke && npm install'
+alias npmls='npm ls --depth=0'
+alias nrun='npm run'
+alias pm='pnpm'
+alias nu='npm uninstall'   # uninstall package
+alias nu-g='npm uninstall -g'   # uninstall global package
+alias pui='pnpm remove'          # pnpm uninstall
+alias yui='yarn remove'          # yarn uninstall   # uninstall package
+
+# --- System ---
+alias ports='sudo lsof -i -P -n | grep LISTEN'
+alias update='sudo apt update && sudo apt upgrade -y'
+alias please='sudo $(fc -ln -1)'   # rerun last command with sudo
+alias c='clear'
+alias h='history'
+alias j='jobs -l'
+alias myip='curl ifconfig.me'
+alias pingg='ping google.com'
+alias flushdns='sudo systemd-resolve --flush-caches'
+alias mem='free -h'
+alias cpu='lscpu'
+alias temp='sensors'     # requires lm-sensors
+alias clsall='clear && printf "\e[3J"'  # total scrollback clear
+alias now='date +"%Y-%m-%d %H:%M:%S"'
+alias today='date +"%A, %d %B %Y"'
+alias pingc='ping cloudflare.com'
+alias iplocal='hostname -I'
+alias ports-tcp='sudo lsof -nP -iTCP -sTCP:LISTEN'
+
+# ========================
+# Functions
+# ========================
+
+# Git branch display
 get_git_branch() {
   local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
   [[ -n $branch ]] && echo "%F{green} ⎇ $branch %f"
 }
 
-
-# Function to get battery percentage
+# Battery status
 get_battery() {
   local battery=$(acpi -b 2>/dev/null | grep -o '[0-9]\+%' | head -n 1)
   local battery_percentage=${battery%?}
-  if [[ $battery_percentage -lt 20 ]]; then
-    echo "%F{red} 🔋 $battery %f"
-  elif [[ $battery_percentage -gt 80 ]]; then
-    echo "%F{green} 🔋 $battery %f"
-  else
-    echo " 🔋 $battery"
+  if [[ -n "$battery_percentage" ]]; then
+    if [[ $battery_percentage -lt 20 ]]; then
+      echo "%F{red} 🔋 $battery %f"
+    elif [[ $battery_percentage -gt 80 ]]; then
+      echo "%F{green} 🔋 $battery %f"
+    else
+      echo " 🔋 $battery"
+    fi
   fi
 }
 
- if [[ -n "$VIRTUAL_ENV" ]]; then
+# Node version
+get_node_version() {
+  echo "%F{blue} 🧠 $(node -v 2>/dev/null)%f"
+}
+
+# Find a process by name
+pfind() {
+  ps aux | grep -i "$1" | grep -v grep
+}
+
+# Kill process on a port
+killport() {
+  if [ -z "$1" ]; then
+    echo "Usage: killport <port>"
+  else
+    fuser -k "$1"/tcp
+  fi
+}
+
+# Rename current Git branch
+grename() {
+  if [ -z "$1" ]; then
+    echo "Usage: grename <new-branch-name>"
+  else
+    old_branch=$(git rev-parse --abbrev-ref HEAD)
+    git branch -m "$1"
+    git push origin -u "$1"
+    git push origin --delete "$old_branch"
+  fi
+}
+
+# Extract any file automatically
+extract() {
+  if [ -f "$1" ] ; then
+    case "$1" in
+      *.tar.bz2)   tar xjf "$1" ;;
+      *.tar.gz)    tar xzf "$1" ;;
+      *.bz2)       bunzip2 "$1" ;;
+      *.rar)       unrar x "$1" ;;
+      *.gz)        gunzip "$1" ;;
+      *.tar)       tar xf "$1" ;;
+      *.tbz2)      tar xjf "$1" ;;
+      *.tgz)       tar xzf "$1" ;;
+      *.zip)       unzip "$1" ;;
+      *.7z)        7z x "$1" ;;
+      *)           echo "Cannot extract '$1'" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# Simple HTTP server
+serve() {
+  port=${1:-3000}
+  python3 -m http.server "$port"
+}
+
+# Find process and show tree
+pstree_find() {
+  pstree -p | grep -i "$1"
+}
+
+# ========================
+# Prompt
+# ========================
+if [[ -n "$VIRTUAL_ENV" ]]; then
   PROMPT="(venv) $PROMPT"
 fi
 
-PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Praveen Singh%f %F{magenta}[📁${PWD/$HOME/}]%f$(get_git_branch)$(get_battery)  %F{green}➤%f '
+PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Praveen Singh%f %F{magenta}[📁${PWD/$HOME/}]%f$(get_git_branch)$(get_node_version)$(get_battery)  %F{green}➤%f '
 
-
-alias gs='git status'
-alias ga='git add .'
-alias gc='git commit -S -m'
-alias gcse='git commit -S --allow-empty -m'
-alias gp='git push'
-
-export TERMINAL="xterm-256color"
-
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# ========================
+# Environment Setup
+# ========================
 export PATH="/usr/bin:$PATH"
 
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-alias startemulator='emulator -avd Pixel_9_Pro'
-
-# pnpm
-export PNPM_HOME="/home/praveen-singh/.local/share/pnpm"
+# PNPM
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# Add any user PATH additions below
+# export PATH="$HOME/bin:$PATH"
