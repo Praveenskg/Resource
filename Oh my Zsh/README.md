@@ -20,10 +20,12 @@ A comprehensive Zsh shell configuration with custom aliases, functions, and a pe
 This configuration provides a powerful, customized Zsh shell experience with:
 
 - 🎨 **Custom Prompt** - Displays time, date, Git branch, Node version, and battery status
+- 📜 **Enhanced History** - 10,000 entries with smart deduplication and session sharing
 - ⚡ **Productive Aliases** - Shortcuts for Git, Docker, NPM, and system commands
 - 🔧 **Useful Functions** - Helper functions for common development tasks
 - 🚀 **Plugin Support** - Git, Docker, NPM, autosuggestions, and syntax highlighting
 - 📦 **Environment Management** - NVM and PNPM integration
+- ⚡ **Performance Optimized** - Efficient prompt rendering and function calls
 
 ---
 
@@ -65,6 +67,12 @@ brew install eza
    source ~/.zshrc
    ```
 
+**Note:** The configuration file follows Oh My Zsh best practices:
+- History settings are configured **before** sourcing Oh My Zsh (required)
+- Terminal title is set **after** Oh My Zsh loads
+- Environment variables are properly exported
+- PATH management avoids duplicates
+
 ---
 
 ## 📄 Configuration Files
@@ -85,6 +93,16 @@ The prompt displays:
 - **Git Branch** - Current branch name (if in a Git repository)
 - **Node Version** - Current Node.js version
 - **Battery Status** - Battery percentage (color-coded: red <20%, green >80%)
+- **Virtual Environment** - Python venv indicator (when active)
+
+### 📜 History Configuration
+
+Enhanced history management with:
+- **10,000 entries** stored in history
+- **Shared history** between sessions
+- **Duplicate prevention** - ignores duplicate commands
+- **Space-prefixed commands** - hidden from history
+- **Smart deduplication** - removes old duplicates automatically
 
 ### 🔌 Plugins
 
@@ -184,7 +202,7 @@ The prompt displays:
 
 | Alias | Command | Description |
 |-------|---------|-------------|
-| `gclean` | `git fetch --prune && git branch --merged \| grep -v "\*" \| xargs -r -n 1 git branch -D` | Clean merged branches |
+| `gclean` | `git fetch --prune && git branch --merged \| grep -v "\*" \| xargs -n 1 git branch -D 2>/dev/null \|\| true` | Clean merged branches (cross-platform compatible) |
 | `gcount` | `git rev-list --all --count` | Count commits |
 | `gfetchprune` | `git fetch --prune` | Fetch and prune |
 
@@ -256,11 +274,12 @@ The prompt displays:
 ### Git Functions
 
 #### `get_git_branch()`
-Displays the current Git branch in green color.
+Displays the current Git branch in green color. Uses `git rev-parse` for better performance and filters out "HEAD" state.
 
 ```bash
 # Automatically called in prompt
 # Shows: ⎇ main
+# Optimized for performance with null checks
 ```
 
 ### System Functions
@@ -277,11 +296,12 @@ Displays battery percentage with color coding:
 ```
 
 #### `get_node_version()`
-Displays current Node.js version.
+Displays current Node.js version with null checking for better reliability.
 
 ```bash
 # Automatically called in prompt
 # Shows: 🧠 v18.0.0
+# Only displays if Node.js is installed
 ```
 
 #### `pfind <name>`
@@ -293,19 +313,23 @@ pfind node
 ```
 
 #### `killport <port>`
-Kill process running on a specific port.
+Kill process running on a specific port. Cross-platform compatible with fallback support for both `fuser` (Linux) and `lsof` (macOS/Linux).
 
 ```bash
 killport 3000
 # Kills process on port 3000
+# Automatically detects available tools
+# Returns error if neither fuser nor lsof is available
 ```
 
 #### `grename <new-name>`
-Rename current Git branch locally and remotely.
+Rename current Git branch locally and remotely. Includes error handling and only updates remote if origin exists.
 
 ```bash
 grename new-branch-name
 # Renames branch and updates remote
+# Validates git repository before proceeding
+# Safely handles missing remote repositories
 ```
 
 #### `extract <file>`
@@ -341,17 +365,25 @@ pstree_find node
 The prompt configuration displays:
 
 ```
-[12:30 PM - Monday] 💻 Praveen Singh [📁/projects/my-app] ⎇ main 🧠 v18.0.0 🔋 85%  ➤
+[12:30 PM - Monday] 💻 Praveen Singh [📁~/projects/my-app] ⎇ main 🧠 v18.0.0 🔋 85%  ➤
 ```
 
 **Components:**
 - `[12:30 PM - Monday]` - Time and day (yellow)
 - `💻 Praveen Singh` - User name (cyan)
-- `[📁/projects/my-app]` - Current directory (magenta)
-- `⎇ main` - Git branch (green, if in Git repo)
-- `🧠 v18.0.0` - Node version (blue)
-- `🔋 85%` - Battery status (color-coded)
+- `[📁~/projects/my-app]` - Current directory (magenta, `~` replaces `$HOME`)
+- `⎇ main` - Git branch (green, if in Git repo, excludes "HEAD" state)
+- `🧠 v18.0.0` - Node version (blue, only if Node.js is installed)
+- `🔋 85%` - Battery status (color-coded: red <20%, green >80%)
 - `➤` - Prompt symbol (green)
+
+**Virtual Environment Support:**
+When a Python virtual environment is active, the prompt shows:
+```
+(venv) [12:30 PM - Monday] 💻 Praveen Singh ...
+```
+
+The prompt is optimized for performance with efficient function calls and null checks.
 
 ---
 
@@ -369,8 +401,19 @@ export NVM_DIR="$HOME/.nvm"
 
 ```bash
 export PNPM_HOME="$HOME/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+# Smart PATH addition (only if not already present)
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 ```
+
+### PATH Management
+
+The configuration includes smart PATH management:
+- Avoids duplicate PATH entries
+- Adds `$HOME/.local/bin` to PATH
+- Custom PATH additions can be added at the bottom of the configuration
 
 ### Python Virtual Environment
 
@@ -407,11 +450,23 @@ source ~/.zshrc
 Edit the prompt line in `Settings.txt`:
 
 ```bash
-# Find this line:
-PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Praveen Singh%f ...
+# Find this line (around line 289):
+PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Praveen Singh%f %F{magenta}[📁${PWD/$HOME/~}]%f$(get_git_branch)$(get_node_version)$(get_battery)  %F{green}➤%f '
 
 # Change to your name:
-PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Your Name%f ...
+PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Your Name%f %F{magenta}[📁${PWD/$HOME/~}]%f$(get_git_branch)$(get_node_version)$(get_battery)  %F{green}➤%f '
+```
+
+### Configure History
+
+Edit the history section (around lines 7-21) to customize:
+
+```bash
+HISTSIZE=10000        # Number of commands in memory
+SAVEHIST=10000        # Number of commands saved to file
+HISTFILE="$HOME/.zsh_history"  # History file location
+
+# Modify setopt options to customize behavior
 ```
 
 ### Add Custom Aliases
@@ -511,10 +566,13 @@ which eza
 ## 💡 Tips
 
 1. **Use Tab Completion** - Enhanced completions work with all aliases
-2. **Command History** - Press `Ctrl+R` to search history
+2. **Command History** - Press `Ctrl+R` to search history (10,000 entries stored)
 3. **Autosuggestions** - Press `→` to accept suggestion
 4. **Quick Navigation** - Use `..`, `...`, `....` for fast directory navigation
 5. **Git Shortcuts** - Most Git operations are 2-3 characters
+6. **History Sharing** - History is shared between all terminal sessions
+7. **Space Prefix** - Start commands with space to hide them from history
+8. **Performance** - Prompt functions are optimized for fast rendering
 
 ---
 

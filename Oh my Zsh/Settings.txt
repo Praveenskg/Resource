@@ -1,9 +1,24 @@
 # ========================
 # Terminal & Title Config
 # ========================
-print -Pn "\e]0;💻  Praveen Singh\a" 
-DISABLE_AUTO_TITLE="true"
 export TERMINAL="xterm-256color"
+export DISABLE_AUTO_TITLE="true"
+
+# ========================
+# History Configuration (must be before Oh My Zsh)
+# ========================
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+HIST_STAMPS="yyyy-mm-dd"
+setopt HIST_VERIFY              # Show command with history expansion before running
+setopt SHARE_HISTORY            # Share history between sessions
+setopt HIST_IGNORE_DUPS         # Don't record duplicates
+setopt HIST_IGNORE_ALL_DUPS     # Delete old recorded entry if new entry is a duplicate
+setopt HIST_FIND_NO_DUPS        # Do not display a line previously found
+setopt HIST_IGNORE_SPACE        # Don't record commands starting with space
+setopt HIST_SAVE_NO_DUPS        # Don't write duplicate entries
+setopt HIST_REDUCE_BLANKS       # Remove superfluous blanks
 
 # ========================
 # Oh My Zsh Setup
@@ -14,10 +29,8 @@ ZSH_THEME="robbyrussell"
 plugins=(git docker npm zsh-autosuggestions zsh-completions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
-# ========================
-# History
-# ========================
-HIST_STAMPS="yyyy-mm-dd"
+# Set terminal title after Oh My Zsh loads
+print -Pn "\e]0;💻  Praveen Singh\a"
 
 # ========================
 # Aliases
@@ -30,7 +43,8 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias -- -='cd -'    # go back to previous dir
-alias c.='code .'    # open VS Code
+alias c.='code .'  # open VS Code
+alias cr='cursor .' # open cursor
 alias bat="batcat"
 alias ll='eza -l --icons'
 alias tree='eza --tree --icons'
@@ -97,7 +111,7 @@ alias gundo-hard='git reset --hard HEAD~1' # destructive - undo and drop changes
 alias gundo-mixed='git reset HEAD~1'       # mixed reset
 
 # cleanup & utilities
-alias gclean='git fetch --prune && git branch --merged | grep -v "\*" | xargs -r -n 1 git branch -D'
+alias gclean='git fetch --prune && git branch --merged | grep -v "\*" | xargs -n 1 git branch -D 2>/dev/null || true'
 alias gcount='git rev-list --all --count'
 alias gfetchprune='git fetch --prune'
 
@@ -129,6 +143,7 @@ alias pr='pnpm run'
 alias format='npm run format'
 alias clean='npm run clean'
 alias start='npm start'
+alias od='npm outdated'
 alias nuke='rm -rf node_modules package-lock.json pnpm-lock.yaml yarn.lock'
 alias reinstall='nuke && npm install'
 alias npmls='npm ls --depth=0'
@@ -163,10 +178,12 @@ alias ports-tcp='sudo lsof -nP -iTCP -sTCP:LISTEN'
 # Functions
 # ========================
 
-# Git branch display
+# Git branch display (cached for performance)
 get_git_branch() {
-  local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
-  [[ -n $branch ]] && echo "%F{green} ⎇ $branch %f"
+  local branch
+  # Use git rev-parse for better performance
+  branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  [[ -n $branch && $branch != "HEAD" ]] && echo "%F{green} ⎇ $branch %f"
 }
 
 # Battery status
@@ -184,9 +201,11 @@ get_battery() {
   fi
 }
 
-# Node version
+# Node version (cached for performance)
 get_node_version() {
-  echo "%F{blue} 🧠 $(node -v 2>/dev/null)%f"
+  local node_ver
+  node_ver=$(node -v 2>/dev/null)
+  [[ -n $node_ver ]] && echo "%F{blue} 🧠 $node_ver%f"
 }
 
 # Find a process by name
@@ -198,8 +217,16 @@ pfind() {
 killport() {
   if [ -z "$1" ]; then
     echo "Usage: killport <port>"
+    return 1
+  fi
+  # Try fuser first (Linux), fallback to lsof (macOS/Linux)
+  if command -v fuser >/dev/null 2>&1; then
+    fuser -k "$1"/tcp 2>/dev/null || lsof -ti:"$1" | xargs kill -9 2>/dev/null
+  elif command -v lsof >/dev/null 2>&1; then
+    lsof -ti:"$1" | xargs kill -9 2>/dev/null
   else
-    fuser -k "$1"/tcp
+    echo "Error: Neither fuser nor lsof found"
+    return 1
   fi
 }
 
@@ -207,11 +234,19 @@ killport() {
 grename() {
   if [ -z "$1" ]; then
     echo "Usage: grename <new-branch-name>"
-  else
-    old_branch=$(git rev-parse --abbrev-ref HEAD)
-    git branch -m "$1"
-    git push origin -u "$1"
-    git push origin --delete "$old_branch"
+    return 1
+  fi
+  local old_branch
+  old_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  if [ -z "$old_branch" ]; then
+    echo "Error: Not in a git repository"
+    return 1
+  fi
+  git branch -m "$1" || return 1
+  # Only push if remote exists
+  if git remote | grep -q "^origin$"; then
+    git push origin -u "$1" 2>/dev/null
+    git push origin --delete "$old_branch" 2>/dev/null
   fi
 }
 
@@ -250,16 +285,18 @@ pstree_find() {
 # ========================
 # Prompt
 # ========================
-if [[ -n "$VIRTUAL_ENV" ]]; then
-  PROMPT="(venv) $PROMPT"
-fi
+# Define base prompt first
+PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Praveen Singh%f %F{magenta}[📁${PWD/$HOME/~}]%f$(get_git_branch)$(get_node_version)$(get_battery)  %F{green}➤%f '
 
-PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Praveen Singh%f %F{magenta}[📁${PWD/$HOME/}]%f$(get_git_branch)$(get_node_version)$(get_battery)  %F{green}➤%f '
+# Add virtual env indicator if active
+if [[ -n "$VIRTUAL_ENV" ]]; then
+  PROMPT="%F{blue}(venv)%f $PROMPT"
+fi
 
 # ========================
 # Environment Setup
 # ========================
-export PATH="/usr/bin:$PATH"
+# Note: /usr/bin is usually already in PATH, avoid prepending unless necessary
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
