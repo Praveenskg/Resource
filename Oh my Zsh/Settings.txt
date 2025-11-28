@@ -26,10 +26,24 @@ setopt HIST_REDUCE_BLANKS       # Remove superfluous blanks
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 
+# Plugins list (kept as-is). These will only be effective if Oh My Zsh and plugins are installed.
 plugins=(git docker npm zsh-autosuggestions zsh-completions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
 
-# Set terminal title after Oh My Zsh loads
+# Source Oh My Zsh if present, otherwise warn
+if [ -d "$ZSH" ] && [ -f "$ZSH/oh-my-zsh.sh" ]; then
+  source "$ZSH/oh-my-zsh.sh"
+else
+  echo "⚠️  Warning: Oh My Zsh not found at $ZSH. Skipping Oh My Zsh load."
+fi
+
+# If some plugins like zsh-syntax-highlighting need to be sourced after, attempt that safely
+# (common install locations)
+if [ -f "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+  # ensure it's sourced last
+  source "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+
+# Set terminal title after Oh My Zsh loads (some themes overwrite it — this helps)
 print -Pn "\e]0;💻  Praveen Singh\a"
 
 # ========================
@@ -37,17 +51,34 @@ print -Pn "\e]0;💻  Praveen Singh\a"
 # ========================
 
 # --- File & Navigation ---
-alias ls='eza -la --icons'
+# Use eza (exa) if available, otherwise fall back to ls
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza -la --icons'
+  alias ll='eza -l --icons'
+  alias tree='eza --tree --icons'
+else
+  alias ls='ls -la'
+  alias ll='ls -l'
+fi
+
 alias cls='clear'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias -- -='cd -'    # go back to previous dir
-alias c.='code .'  # open VS Code
-alias cr='cursor .' # open cursor
-alias bat="batcat"
-alias ll='eza -l --icons'
-alias tree='eza --tree --icons'
+
+# Editor / tools: set only if available
+command -v code >/dev/null 2>&1 && alias c.='code .'
+command -v cursor >/dev/null 2>&1 && alias cr='cursor .'
+
+# bat vs batcat portability (Debian uses batcat)
+if command -v batcat >/dev/null 2>&1; then
+  alias bat='batcat'
+elif command -v bat >/dev/null 2>&1; then
+  alias bat='bat'
+fi
+
+alias tree='tree'  # fallback; overwritten above if eza exists
 alias md='mkdir -p'
 alias rd='rm -rf'
 alias f='find . -type f -name'     # usage: f "*.js"
@@ -60,76 +91,57 @@ alias paths='echo $PATH | tr ":" "\n"'
 alias usage='du -sh *'   # show folder sizes
 alias whichp='which -a'  # show all executable paths
 
-
 # --- Git Shortcuts ---
-# Git aliases - optimized & switch-friendly
-
-# basic
 alias gs='git status'
 alias gss='git status -s'
 alias gl='git log --oneline --graph --decorate --all'
 alias gshow='git show'
 alias gdiff='git diff'
 alias gstats='git diff --stat'
-
-# add / commit / amend
-alias ga='git add .'                 # add all new/modified (same as before)
-alias gau='git add -u'               # update tracked files only
+alias ga='git add .'
+alias gau='git add -u'
 alias gamend='git commit --amend --no-edit'
-alias gcm='git commit -m'            # normal commit
-alias gc='git commit -S -m'          # signed commit with message
+alias gcm='git commit -m'
+alias gc='git commit -S -m'
 alias gcse='git commit -S --allow-empty -m'
-
-# branch & switching (use git switch)
 alias gsw='git switch'
-alias gcb='git switch -c'            # create & switch to new branch (was checkout -b)
+alias gcb='git switch -c'
 alias gb='git branch'
 alias gba='git branch -a'
 alias gbd='git branch -D'
 alias gtags='git tag -l'
-
-# fetch / pull / push
 alias gfetch='git fetch --all --prune'
 alias gpl='git pull'
 alias gplr='git pull --rebase'
 alias gp='git push'
 alias gpf='git push -f'
-# safer force-with-lease push
 alias gpfl='git push --force-with-lease'
-
-# clone / remote
 alias gcl='git clone'
 alias gremote='git remote -v'
-
-# stash
 alias gstash='git stash push -m'
 alias gstashp='git stash pop'
-
-# undo / resets (kept distinct)
-alias gundo='git reset --soft HEAD~1'      # undo last commit but keep changes (soft)
-alias gundo-hard='git reset --hard HEAD~1' # destructive - undo and drop changes
-alias gundo-mixed='git reset HEAD~1'       # mixed reset
-
-# cleanup & utilities
-alias gclean='git fetch --prune && git branch --merged | grep -v "\*" | xargs -n 1 git branch -D 2>/dev/null || true'
+alias gundo='git reset --soft HEAD~1'
+alias gundo-hard='git reset --hard HEAD~1'
+alias gundo-mixed='git reset HEAD~1'
+# safer gclean: works on GNU xargs (use -r to avoid running command with empty input), fallback preserved
+if xargs --help 2>&1 | grep -q -- '-r'; then
+  alias gclean='git fetch --prune && git branch --merged | grep -v "\*" | xargs -r -n 1 git branch -D 2>/dev/null || true'
+else
+  alias gclean='git fetch --prune && git branch --merged | grep -v "\*" | xargs -n 1 git branch -D 2>/dev/null || true'
+fi
 alias gcount='git rev-list --all --count'
 alias gfetchprune='git fetch --prune'
 
-# misc
-alias gst='git status'   # convenience (optional duplicate)
-
-
-
 # --- Docker Helpers ---
 alias dps='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
-alias dstop='docker stop $(docker ps -q)'
-alias drm='docker rm -f $(docker ps -aq)'
+alias dstop='docker stop $(docker ps -q 2>/dev/null) 2>/dev/null || true'
+alias drm='docker rm -f $(docker ps -aq 2>/dev/null) 2>/dev/null || true'
 alias dprune='docker system prune -af --volumes'
-alias docker-clean='docker rm -f $(docker ps -aq) 2>/dev/null'
+alias docker-clean='docker rm -f $(docker ps -aq 2>/dev/null) 2>/dev/null || true'
 alias dimg='docker images'
 alias dnet='docker network ls'
 alias dlogs='docker logs -f'
-alias dbash='docker exec -it'   # usage: dbash container-name bash
+alias dbash='docker exec -it'
 
 # --- NPM / PNPM ---
 alias dev='npm run dev'
@@ -149,15 +161,15 @@ alias reinstall='nuke && npm install'
 alias npmls='npm ls --depth=0'
 alias nrun='npm run'
 alias pm='pnpm'
-alias nu='npm uninstall'   # uninstall package
-alias nu-g='npm uninstall -g'   # uninstall global package
-alias pui='pnpm remove'          # pnpm uninstall
-alias yui='yarn remove'          # yarn uninstall   # uninstall package
+alias nu='npm uninstall'
+alias nu-g='npm uninstall -g'
+alias pui='pnpm remove'
+alias yui='yarn remove'
 
 # --- System ---
 alias ports='sudo lsof -i -P -n | grep LISTEN'
 alias update='sudo apt update && sudo apt upgrade -y'
-alias please='sudo $(fc -ln -1)'   # rerun last command with sudo
+alias please='sudo $(fc -ln -1)'
 alias c='clear'
 alias h='history'
 alias j='jobs -l'
@@ -166,8 +178,8 @@ alias pingg='ping google.com'
 alias flushdns='sudo systemd-resolve --flush-caches'
 alias mem='free -h'
 alias cpu='lscpu'
-alias temp='sensors'     # requires lm-sensors
-alias clsall='clear && printf "\e[3J"'  # total scrollback clear
+alias temp='sensors'
+alias clsall='clear && printf "\e[3J"'
 alias now='date +"%Y-%m-%d %H:%M:%S"'
 alias today='date +"%A, %d %B %Y"'
 alias pingc='ping cloudflare.com'
@@ -178,17 +190,19 @@ alias ports-tcp='sudo lsof -nP -iTCP -sTCP:LISTEN'
 # Functions
 # ========================
 
-# Git branch display (cached for performance)
 get_git_branch() {
   local branch
-  # Use git rev-parse for better performance
   branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   [[ -n $branch && $branch != "HEAD" ]] && echo "%F{green} ⎇ $branch %f"
 }
 
-# Battery status
 get_battery() {
-  local battery=$(acpi -b 2>/dev/null | grep -o '[0-9]\+%' | head -n 1)
+  # Return nothing if acpi missing (avoids errors on desktops/VMs)
+  if ! command -v acpi >/dev/null 2>&1; then
+    return
+  fi
+  local battery
+  battery=$(acpi -b 2>/dev/null | grep -o '[0-9]\+%' | head -n 1)
   local battery_percentage=${battery%?}
   if [[ -n "$battery_percentage" ]]; then
     if [[ $battery_percentage -lt 20 ]]; then
@@ -201,36 +215,34 @@ get_battery() {
   fi
 }
 
-# Node version (cached for performance)
 get_node_version() {
-  local node_ver
-  node_ver=$(node -v 2>/dev/null)
-  [[ -n $node_ver ]] && echo "%F{blue} 🧠 $node_ver%f"
+  # Avoid printing if node not available
+  if command -v node >/dev/null 2>&1; then
+    local node_ver
+    node_ver=$(node -v 2>/dev/null)
+    [[ -n $node_ver ]] && echo "%F{blue} 🧠 $node_ver%f"
+  fi
 }
 
-# Find a process by name
 pfind() {
   ps aux | grep -i "$1" | grep -v grep
 }
 
-# Kill process on a port
 killport() {
   if [ -z "$1" ]; then
     echo "Usage: killport <port>"
     return 1
   fi
-  # Try fuser first (Linux), fallback to lsof (macOS/Linux)
   if command -v fuser >/dev/null 2>&1; then
-    fuser -k "$1"/tcp 2>/dev/null || lsof -ti:"$1" | xargs kill -9 2>/dev/null
+    fuser -k "$1"/tcp 2>/dev/null || lsof -ti:"$1" | xargs kill -9 2>/dev/null || true
   elif command -v lsof >/dev/null 2>&1; then
-    lsof -ti:"$1" | xargs kill -9 2>/dev/null
+    lsof -ti:"$1" | xargs kill -9 2>/dev/null || true
   else
-    echo "Error: Neither fuser nor lsof found"
+    echo "Error: Neither fuser nor lsof found. Install with: sudo apt install psmisc lsof"
     return 1
   fi
 }
 
-# Rename current Git branch
 grename() {
   if [ -z "$1" ]; then
     echo "Usage: grename <new-branch-name>"
@@ -243,14 +255,12 @@ grename() {
     return 1
   fi
   git branch -m "$1" || return 1
-  # Only push if remote exists
   if git remote | grep -q "^origin$"; then
     git push origin -u "$1" 2>/dev/null
-    git push origin --delete "$old_branch" 2>/dev/null
+    git push origin --delete "$old_branch" 2>/dev/null || true
   fi
 }
 
-# Extract any file automatically
 extract() {
   if [ -f "$1" ] ; then
     case "$1" in
@@ -271,27 +281,31 @@ extract() {
   fi
 }
 
-# Simple HTTP server
 serve() {
   port=${1:-3000}
   python3 -m http.server "$port"
 }
 
-# Find process and show tree
 pstree_find() {
-  pstree -p | grep -i "$1"
+  if command -v pstree >/dev/null 2>&1; then
+    pstree -p | grep -i "$1"
+  else
+    ps aux | grep -i "$1" | grep -v grep
+  fi
+}
+
+get_python_version() {
+  if command -v python3 >/dev/null 2>&1; then
+    local py_ver
+    py_ver=$(python3 --version 2>/dev/null | awk '{print $2}')
+    echo "%F{yellow} 🐍 $py_ver%f"
+  fi
 }
 
 # ========================
 # Prompt
 # ========================
-# Define base prompt first
-PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Praveen Singh%f %F{magenta}[📁${PWD/$HOME/~}]%f$(get_git_branch)$(get_node_version)$(get_battery)  %F{green}➤%f '
-
-# Add virtual env indicator if active
-if [[ -n "$VIRTUAL_ENV" ]]; then
-  PROMPT="%F{blue}(venv)%f $PROMPT"
-fi
+PROMPT='%F{yellow}[%D{%I:%M %p} - %D{%A}]%f 💻 %F{cyan}Praveen Singh%f %F{magenta}[📁${PWD/$HOME/~}]%f$(get_git_branch)$(get_node_version)$(get_python_version)$(get_battery)  %F{green}➤%f '
 
 # ========================
 # Environment Setup
@@ -300,13 +314,19 @@ fi
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  # shellcheck source=/dev/null
+  . "$NVM_DIR/nvm.sh"
+fi
+if [ -s "$NVM_DIR/bash_completion" ]; then
+  # shellcheck source=/dev/null
+  . "$NVM_DIR/bash_completion"
+fi
 
 # PNPM
 export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
+  *":$PNPM_HOME:") ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
@@ -314,3 +334,10 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Add any user PATH additions below
 # export PATH="$HOME/bin:$PATH"
+
+# quick syntax check helper (uncomment to run automatically on new shells if desired)
+# zsh -n ~/.zshrc || echo "zshrc syntax check failed"
+
+# ========================
+# End of file
+# ========================
