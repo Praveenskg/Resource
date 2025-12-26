@@ -133,7 +133,7 @@ alias gcount='git rev-list --all --count'
 alias gfetchprune='git fetch --prune'
 
 # --- Docker Helpers ---
-alias dps='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
+alias dps='docker ps'
 alias dstop='docker stop $(docker ps -q 2>/dev/null) 2>/dev/null || true'
 alias drm='docker rm -f $(docker ps -aq 2>/dev/null) 2>/dev/null || true'
 alias dprune='docker system prune -af --volumes'
@@ -323,12 +323,14 @@ if [ -s "$NVM_DIR/bash_completion" ]; then
   . "$NVM_DIR/bash_completion"
 fi
 
-# PNPM
-export PNPM_HOME="$HOME/.local/share/pnpm"
+
+# pnpm
+export PNPM_HOME="/home/praveen-singh/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:") ;;
+  *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+# pnpm end
 
 export PATH="$HOME/.local/bin:$PATH"
 

@@ -19,14 +19,13 @@ A comprehensive Zsh shell configuration with custom aliases, functions, and a pe
 
 This configuration provides a powerful, customized Zsh shell experience with:
 
-- 🎨 **Custom Prompt** - Displays time, date, Git branch, Node version, Python version, and battery status
+- 🎨 **Custom Prompt** - Displays time, date, Git branch, Node/Python versions, and battery status
 - 📜 **Enhanced History** - 10,000 entries with smart deduplication and session sharing
 - ⚡ **Productive Aliases** - Shortcuts for Git, Docker, NPM, and system commands
 - 🔧 **Useful Functions** - Helper functions for common development tasks
 - 🚀 **Plugin Support** - Git, Docker, NPM, autosuggestions, and syntax highlighting
 - 📦 **Environment Management** - NVM and PNPM integration
 - ⚡ **Performance Optimized** - Efficient prompt rendering and function calls
-- 🛡️ **Robust Error Handling** - Conditional loading, fallbacks, and graceful degradation
 
 ---
 
@@ -70,12 +69,9 @@ brew install eza
 
 **Note:** The configuration file follows Oh My Zsh best practices:
 - History settings are configured **before** sourcing Oh My Zsh (required)
-- Oh My Zsh loads conditionally with error handling (works even if Oh My Zsh isn't installed)
-- zsh-syntax-highlighting is sourced separately after Oh My Zsh (required for proper functionality)
 - Terminal title is set **after** Oh My Zsh loads
 - Environment variables are properly exported
 - PATH management avoids duplicates
-- All aliases and functions include conditional checks for missing dependencies
 
 ---
 
@@ -95,9 +91,9 @@ The prompt displays:
 - **User Name** - Your name (Praveen Singh)
 - **Current Directory** - Shortened path with folder icon
 - **Git Branch** - Current branch name (if in a Git repository)
-- **Node Version** - Current Node.js version (only if installed)
-- **Python Version** - Current Python version (only if installed)
-- **Battery Status** - Battery percentage (color-coded: red <20%, green >80%, only on laptops)
+- **Node Version** - Current Node.js version
+- **Python Version** - Current Python version (when available)
+- **Battery Status** - Battery percentage (color-coded: red <20%, green >80%)
 - **Virtual Environment** - Python venv indicator (when active)
 
 ### 📜 History Configuration
@@ -116,19 +112,7 @@ Enhanced history management with:
 - `npm` - NPM aliases
 - `zsh-autosuggestions` - Command autosuggestions
 - `zsh-completions` - Enhanced tab completions
-- `zsh-syntax-highlighting` - Syntax highlighting (sourced separately after Oh My Zsh)
-
-### 🛡️ Robustness Features
-
-The configuration includes extensive error handling and graceful degradation:
-
-- **Conditional Oh My Zsh Loading** - Works even if Oh My Zsh isn't installed
-- **Smart Alias Detection** - Aliases only created if commands exist (eza, code, cursor, bat)
-- **Fallback Support** - Falls back to standard commands when enhanced versions aren't available
-- **Error Suppression** - Docker aliases handle empty container lists gracefully
-- **Cross-Platform Compatibility** - Auto-detects GNU vs BSD xargs, fuser vs lsof
-- **Command Availability Checks** - All prompt functions check for command existence before execution
-- **Silent Failures** - Missing tools don't cause errors or warnings in the prompt
+- `zsh-syntax-highlighting` - Syntax highlighting
 
 ---
 
@@ -138,17 +122,18 @@ The configuration includes extensive error handling and graceful degradation:
 
 | Alias | Command | Description |
 |-------|---------|-------------|
-| `ls` | `eza -la --icons` or `ls -la` | List files with icons (falls back to ls if eza not installed) |
-| `ll` | `eza -l --icons` or `ls -l` | List files (short format, falls back if eza missing) |
-| `tree` | `eza --tree --icons` or `tree` | Tree view with icons (falls back to tree command) |
+| `ls` | `eza -la --icons` | List files with icons |
+| `ll` | `eza -l --icons` | List files (short format) |
+| `tree` | `eza --tree --icons` | Tree view with icons |
 | `cls` | `clear` | Clear screen |
 | `..` | `cd ..` | Go up one directory |
 | `...` | `cd ../..` | Go up two directories |
 | `....` | `cd ../../..` | Go up three directories |
+| `..2` | `cd ../../` | Go up two directories (alternative) |
+| `..3` | `cd ../../../` | Go up three directories (alternative) |
 | `-` | `cd -` | Go back to previous directory |
-| `c.` | `code .` | Open VS Code (only if VS Code is installed) |
-| `cr` | `cursor .` | Open Cursor IDE (only if Cursor is installed) |
-| `bat` | `batcat` or `bat` | Modern cat replacement (auto-detects batcat/bat) |
+| `c.` | `code .` | Open VS Code in current directory |
+| `cr` | `cursor .` | Open Cursor in current directory |
 | `md` | `mkdir -p` | Create directory |
 | `rd` | `rm -rf` | Remove directory |
 | `f "*.js"` | `find . -type f -name` | Find files |
@@ -221,7 +206,7 @@ The configuration includes extensive error handling and graceful degradation:
 
 | Alias | Command | Description |
 |-------|---------|-------------|
-| `gclean` | `git fetch --prune && git branch --merged \| grep -v "\*" \| xargs [-r] -n 1 git branch -D 2>/dev/null \|\| true` | Clean merged branches (auto-detects GNU xargs -r flag support) |
+| `gclean` | `git fetch --prune && git branch --merged \| grep -v "\*" \| xargs -n 1 git branch -D 2>/dev/null \|\| true` | Clean merged branches (cross-platform compatible) |
 | `gcount` | `git rev-list --all --count` | Count commits |
 | `gfetchprune` | `git fetch --prune` | Fetch and prune |
 
@@ -230,10 +215,10 @@ The configuration includes extensive error handling and graceful degradation:
 | Alias | Command | Description |
 |-------|---------|-------------|
 | `dps` | `docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"` | List containers |
-| `dstop` | `docker stop $(docker ps -q 2>/dev/null) 2>/dev/null \|\| true` | Stop all containers (with error handling) |
-| `drm` | `docker rm -f $(docker ps -aq 2>/dev/null) 2>/dev/null \|\| true` | Remove all containers (with error handling) |
+| `dstop` | `docker stop $(docker ps -q)` | Stop all containers |
+| `drm` | `docker rm -f $(docker ps -aq)` | Remove all containers |
 | `dprune` | `docker system prune -af --volumes` | Clean Docker system |
-| `docker-clean` | `docker rm -f $(docker ps -aq 2>/dev/null) 2>/dev/null \|\| true` | Clean containers (with error handling) |
+| `docker-clean` | `docker rm -f $(docker ps -aq) 2>/dev/null` | Clean containers |
 | `dimg` | `docker images` | List images |
 | `dnet` | `docker network ls` | List networks |
 | `dlogs container` | `docker logs -f` | Follow logs |
@@ -249,6 +234,8 @@ The configuration includes extensive error handling and graceful degradation:
 | `nrb` | `npm run build` | Build project |
 | `nrt` | `npm run test` | Run tests |
 | `nrs` | `npm run start` | Start project |
+| `od` | `npm outdated` | Show outdated packages |
+| `nrun` | `npm run` | Run npm script (alternative) |
 | `pi` | `pnpm install` | Install with pnpm |
 | `pr script` | `pnpm run` | Run with pnpm |
 | `pm` | `pnpm` | pnpm shortcut |
@@ -308,32 +295,28 @@ Displays battery percentage with color coding:
 - 🔴 Red if < 20%
 - 🟢 Green if > 80%
 - ⚪ Default otherwise
-- Only displays if `acpi` command is available (skips on desktops/VMs)
 
 ```bash
 # Automatically called in prompt
 # Shows: 🔋 85%
-# Silently skips if acpi is not installed
 ```
 
 #### `get_node_version()`
-Displays current Node.js version with command availability checking.
+Displays current Node.js version with null checking for better reliability.
 
 ```bash
 # Automatically called in prompt
 # Shows: 🧠 v18.0.0
 # Only displays if Node.js is installed
-# Checks for node command before execution
 ```
 
 #### `get_python_version()`
-Displays current Python version with command availability checking.
+Displays current Python version when Python 3 is available.
 
 ```bash
 # Automatically called in prompt
-# Shows: 🐍 3.11.0
+# Shows: 🐍 3.9.0
 # Only displays if Python 3 is installed
-# Checks for python3 command before execution
 ```
 
 #### `pfind <name>`
@@ -351,8 +334,7 @@ Kill process running on a specific port. Cross-platform compatible with fallback
 killport 3000
 # Kills process on port 3000
 # Automatically detects available tools
-# Provides installation instructions if neither tool is available
-# Error message: "Install with: sudo apt install psmisc lsof"
+# Returns error if neither fuser nor lsof is available
 ```
 
 #### `grename <new-name>`
@@ -363,7 +345,6 @@ grename new-branch-name
 # Renames branch and updates remote
 # Validates git repository before proceeding
 # Safely handles missing remote repositories
-# Uses || true to prevent errors on remote deletion failures
 ```
 
 #### `extract <file>`
@@ -385,12 +366,11 @@ serve 8080   # Custom port
 ```
 
 #### `pstree_find <name>`
-Find process in process tree. Falls back to `ps aux` if `pstree` is not available.
+Find process in process tree.
 
 ```bash
 pstree_find node
 # Shows node process tree
-# Falls back to ps aux | grep if pstree not installed
 ```
 
 ---
@@ -400,7 +380,7 @@ pstree_find node
 The prompt configuration displays:
 
 ```
-[12:30 PM - Monday] 💻 Praveen Singh [📁~/projects/my-app] ⎇ main 🧠 v18.0.0 🐍 3.11.0 🔋 85%  ➤
+[12:30 PM - Monday] 💻 Praveen Singh [📁~/projects/my-app] ⎇ main 🧠 v18.0.0 🐍 3.9.0 🔋 85%  ➤
 ```
 
 **Components:**
@@ -409,8 +389,8 @@ The prompt configuration displays:
 - `[📁~/projects/my-app]` - Current directory (magenta, `~` replaces `$HOME`)
 - `⎇ main` - Git branch (green, if in Git repo, excludes "HEAD" state)
 - `🧠 v18.0.0` - Node version (blue, only if Node.js is installed)
-- `🐍 3.11.0` - Python version (yellow, only if Python 3 is installed)
-- `🔋 85%` - Battery status (color-coded: red <20%, green >80%, only on laptops)
+- `🐍 3.9.0` - Python version (yellow, only if Python is installed)
+- `🔋 85%` - Battery status (color-coded: red <20%, green >80%)
 - `➤` - Prompt symbol (green)
 
 **Virtual Environment Support:**
@@ -429,16 +409,9 @@ The prompt is optimized for performance with efficient function calls and null c
 
 ```bash
 export NVM_DIR="$HOME/.nvm"
-# Conditional loading with proper error handling
-if [ -s "$NVM_DIR/nvm.sh" ]; then
-  . "$NVM_DIR/nvm.sh"
-fi
-if [ -s "$NVM_DIR/bash_completion" ]; then
-  . "$NVM_DIR/bash_completion"
-fi
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 ```
-
-**Note:** NVM only loads if it's installed. The configuration gracefully handles missing NVM installations.
 
 ### PNPM
 
@@ -595,20 +568,6 @@ type get_python_version
 
 # Verify eza is installed (for ls alias)
 which eza
-
-# Check if Oh My Zsh loaded correctly
-echo $ZSH
-```
-
-### Oh My Zsh Not Found Warning
-
-If you see "⚠️ Warning: Oh My Zsh not found", the configuration will still work but without Oh My Zsh features:
-
-```bash
-# Install Oh My Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# Or continue without Oh My Zsh - aliases and functions will still work
 ```
 
 ---
@@ -631,8 +590,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 6. **History Sharing** - History is shared between all terminal sessions
 7. **Space Prefix** - Start commands with space to hide them from history
 8. **Performance** - Prompt functions are optimized for fast rendering
-9. **Graceful Degradation** - Configuration works even if some tools (eza, VS Code, Docker) aren't installed
-10. **Cross-Platform** - Works on Linux, macOS, and WSL with automatic tool detection
 
 ---
 
