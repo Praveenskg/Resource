@@ -120,158 +120,164 @@ Enhanced history management with:
 
 ### File & Navigation
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `ls` | `eza -la --icons` | List files with icons |
-| `ll` | `eza -l --icons` | List files (short format) |
-| `tree` | `eza --tree --icons` | Tree view with icons |
-| `cls` | `clear` | Clear screen |
-| `..` | `cd ..` | Go up one directory |
-| `...` | `cd ../..` | Go up two directories |
-| `....` | `cd ../../..` | Go up three directories |
-| `..2` | `cd ../../` | Go up two directories (alternative) |
-| `..3` | `cd ../../../` | Go up three directories (alternative) |
-| `-` | `cd -` | Go back to previous directory |
-| `c.` | `code .` | Open VS Code in current directory |
-| `cr` | `cursor .` | Open Cursor in current directory |
-| `md` | `mkdir -p` | Create directory |
-| `rd` | `rm -rf` | Remove directory |
-| `f "*.js"` | `find . -type f -name` | Find files |
-| `d "components"` | `find . -type d -name` | Find directories |
-| `reload` | `source ~/.zshrc` | Reload Zsh configuration |
-| `sz` | `source ~/.zshrc` | Reload Zsh (short) |
-| `paths` | `echo $PATH \| tr ":" "\n"` | Show PATH entries |
-| `usage` | `du -sh *` | Show folder sizes |
-| `whichp` | `which -a` | Show all executable paths |
+| Alias            | Command                     | Description                            |
+| ---------------- | --------------------------- | -------------------------------------- |
+| `ls`             | `eza -la --icons`           | List files with icons                  |
+| `ll`             | `eza -l --icons`            | List files (short format)              |
+| `tree`           | `eza --tree --icons`        | Tree view with icons                   |
+| `cls`            | `clear`                     | Clear screen                           |
+| `..`             | `cd ..`                     | Go up one directory                    |
+| `...`            | `cd ../..`                  | Go up two directories                  |
+| `....`           | `cd ../../..`               | Go up three directories                |
+| `..2`            | `cd ../../`                 | Go up two directories (alternative)    |
+| `..3`            | `cd ../../../`              | Go up three directories (alternative)  |
+| `-`              | `cd -`                      | Go back to previous directory          |
+| `c.`             | `code .`                    | Open VS Code in current directory      |
+| `cr`             | `cursor .`                  | Open Cursor in current directory       |
+| `bat`            | `batcat` or `bat`           | Modern cat replacement (auto-detected) |
+| `md`             | `mkdir -p`                  | Create directory                       |
+| `rd`             | `rm -rf`                    | Remove directory                       |
+| `f "*.js"`       | `find . -type f -name`      | Find files                             |
+| `d "components"` | `find . -type d -name`      | Find directories                       |
+| `reload`         | `source ~/.zshrc`           | Reload Zsh configuration               |
+| `sz`             | `source ~/.zshrc`           | Reload Zsh (short)                     |
+| `paths`          | `echo $PATH \| tr ":" "\n"` | Show PATH entries                      |
+| `usage`          | `du -sh *`                  | Show folder sizes                      |
+| `whichp`         | `which -a`                  | Show all executable paths              |
 
 ### Git Aliases
 
 #### Basic Commands
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `gs` | `git status` | Check status |
-| `gss` | `git status -s` | Short status |
-| `gl` | `git log --oneline --graph --decorate --all` | Pretty log |
-| `gshow` | `git show` | Show last commit |
-| `gdiff` | `git diff` | Show differences |
-| `gstats` | `git diff --stat` | Show diff statistics |
+| Alias    | Command                                      | Description          |
+| -------- | -------------------------------------------- | -------------------- |
+| `gs`     | `git status`                                 | Check status         |
+| `gss`    | `git status -s`                              | Short status         |
+| `gl`     | `git log --oneline --graph --decorate --all` | Pretty log           |
+| `gshow`  | `git show`                                   | Show last commit     |
+| `gdiff`  | `git diff`                                   | Show differences     |
+| `gstats` | `git diff --stat`                            | Show diff statistics |
 
 #### Staging & Committing
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `ga` | `git add .` | Add all changes |
-| `gau` | `git add -u` | Update tracked files |
-| `gcm "msg"` | `git commit -m` | Commit with message |
-| `gc "msg"` | `git commit -S -m` | Signed commit |
-| `gcse "msg"` | `git commit -S --allow-empty -m` | Empty signed commit |
-| `gamend` | `git commit --amend --no-edit` | Amend last commit |
+| Alias        | Command                          | Description          |
+| ------------ | -------------------------------- | -------------------- |
+| `ga`         | `git add .`                      | Add all changes      |
+| `gau`        | `git add -u`                     | Update tracked files |
+| `gcm "msg"`  | `git commit -m`                  | Commit with message  |
+| `gc "msg"`   | `git commit -S -m`               | Signed commit        |
+| `gcse "msg"` | `git commit -S --allow-empty -m` | Empty signed commit  |
+| `gamend`     | `git commit --amend --no-edit`   | Amend last commit    |
 
 #### Branch Management
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `gsw branch` | `git switch` | Switch branch |
+| Alias        | Command         | Description            |
+| ------------ | --------------- | ---------------------- |
+| `gsw branch` | `git switch`    | Switch branch          |
 | `gcb branch` | `git switch -c` | Create & switch branch |
-| `gb` | `git branch` | List branches |
-| `gba` | `git branch -a` | List all branches |
-| `gbd branch` | `git branch -D` | Delete branch |
-| `gtags` | `git tag -l` | List tags |
+| `gb`         | `git branch`    | List branches          |
+| `gba`        | `git branch -a` | List all branches      |
+| `gbd branch` | `git branch -D` | Delete branch          |
+| `gtags`      | `git tag -l`    | List tags              |
 
 #### Remote Operations
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `gfetch` | `git fetch --all --prune` | Fetch all remotes |
-| `gpl` | `git pull` | Pull changes |
-| `gplr` | `git pull --rebase` | Pull with rebase |
-| `gp` | `git push` | Push changes |
-| `gpf` | `git push -f` | Force push |
-| `gpfl` | `git push --force-with-lease` | Safe force push |
-| `gcl url` | `git clone` | Clone repository |
-| `gremote` | `git remote -v` | Show remotes |
+| Alias     | Command                       | Description       |
+| --------- | ----------------------------- | ----------------- |
+| `gfetch`  | `git fetch --all --prune`     | Fetch all remotes |
+| `gpl`     | `git pull`                    | Pull changes      |
+| `gplr`    | `git pull --rebase`           | Pull with rebase  |
+| `gp`      | `git push`                    | Push changes      |
+| `gpf`     | `git push -f`                 | Force push        |
+| `gpfl`    | `git push --force-with-lease` | Safe force push   |
+| `gcl url` | `git clone`                   | Clone repository  |
+| `gremote` | `git remote -v`               | Show remotes      |
 
 #### Stash & Undo
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `gstash "msg"` | `git stash push -m` | Stash with message |
-| `gstashp` | `git stash pop` | Apply stash |
-| `gundo` | `git reset --soft HEAD~1` | Undo commit (keep changes) |
-| `gundo-hard` | `git reset --hard HEAD~1` | Undo commit (discard changes) |
-| `gundo-mixed` | `git reset HEAD~1` | Mixed reset |
+| Alias          | Command                   | Description                   |
+| -------------- | ------------------------- | ----------------------------- |
+| `gstash "msg"` | `git stash push -m`       | Stash with message            |
+| `gstashp`      | `git stash pop`           | Apply stash                   |
+| `gundo`        | `git reset --soft HEAD~1` | Undo commit (keep changes)    |
+| `gundo-hard`   | `git reset --hard HEAD~1` | Undo commit (discard changes) |
+| `gundo-mixed`  | `git reset HEAD~1`        | Mixed reset                   |
 
 #### Utilities
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `gclean` | `git fetch --prune && git branch --merged \| grep -v "\*" \| xargs -n 1 git branch -D 2>/dev/null \|\| true` | Clean merged branches (cross-platform compatible) |
-| `gcount` | `git rev-list --all --count` | Count commits |
-| `gfetchprune` | `git fetch --prune` | Fetch and prune |
+| Alias         | Command                                                                                                         | Description                                       |
+| ------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `gclean`      | `git fetch --prune && git branch --merged \| grep -v "\*" \| xargs -r -n 1 git branch -D 2>/dev/null \|\| true` | Clean merged branches (cross-platform compatible) |
+| `gcount`      | `git rev-list --all --count`                                                                                    | Count commits                                     |
+| `gfetchprune` | `git fetch --prune`                                                                                             | Fetch and prune                                   |
 
 ### Docker Aliases
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `dps` | `docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"` | List containers |
-| `dstop` | `docker stop $(docker ps -q)` | Stop all containers |
-| `drm` | `docker rm -f $(docker ps -aq)` | Remove all containers |
-| `dprune` | `docker system prune -af --volumes` | Clean Docker system |
-| `docker-clean` | `docker rm -f $(docker ps -aq) 2>/dev/null` | Clean containers |
-| `dimg` | `docker images` | List images |
-| `dnet` | `docker network ls` | List networks |
-| `dlogs container` | `docker logs -f` | Follow logs |
-| `dbash container` | `docker exec -it` | Execute in container |
+| Alias             | Command                                                                                                         | Description              |
+| ----------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `dps`             | `docker ps`                                                                                                     | List containers          |
+| `dstop`           | `docker stop $(docker ps -q 2>/dev/null) 2>/dev/null \|\| true`                                                 | Stop all containers      |
+| `drm`             | `docker rm -f $(docker ps -aq 2>/dev/null) 2>/dev/null \|\| true`                                               | Remove all containers    |
+| `dprune`          | `docker system prune -af --volumes`                                                                             | Clean Docker system      |
+| `docker-clean`    | `docker rm -f $(docker ps -aq 2>/dev/null) 2>/dev/null \|\| true`                                               | Clean containers         |
+| `dimg`            | `docker images`                                                                                                 | List images              |
+| `dnet`            | `docker network ls`                                                                                             | List networks            |
+| `dlogs container` | `docker logs -f`                                                                                                | Follow logs              |
+| `dbash container` | `docker exec -it`                                                                                               | Execute in container     |
+| `mongo-docker`    | `echo "🐳 Switching to Docker Mongo (27017)" && sudo systemctl stop mongod && docker compose --profile db up -d` | Switch to Docker MongoDB |
+| `mongo-local`     | `echo "🟢 Switching to Local Mongo (27017)" && docker compose --profile db down && sudo systemctl start mongod`  | Switch to local MongoDB  |
+| `mongo-check`     | `echo "🔎 Mongo on 27017:" && sudo lsof -i :27017`                                                               | Check MongoDB status     |
+| `mongo-shell`     | `mongosh mongodb://localhost:27017`                                                                             | Open MongoDB shell       |
 
 ### NPM/PNPM Aliases
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `dev` | `npm run dev` | Run dev script |
-| `ni` | `npm install` | Install packages |
-| `nr script` | `npm run` | Run npm script |
-| `nrb` | `npm run build` | Build project |
-| `nrt` | `npm run test` | Run tests |
-| `nrs` | `npm run start` | Start project |
-| `od` | `npm outdated` | Show outdated packages |
-| `nrun` | `npm run` | Run npm script (alternative) |
-| `pi` | `pnpm install` | Install with pnpm |
-| `pr script` | `pnpm run` | Run with pnpm |
-| `pm` | `pnpm` | pnpm shortcut |
-| `format` | `npm run format` | Format code |
-| `clean` | `npm run clean` | Clean project |
-| `start` | `npm start` | Start application |
-| `nuke` | `rm -rf node_modules package-lock.json pnpm-lock.yaml yarn.lock` | Remove all lock files |
-| `reinstall` | `nuke && npm install` | Clean reinstall |
-| `npmls` | `npm ls --depth=0` | List top-level packages |
-| `nu package` | `npm uninstall` | Uninstall package |
-| `nu-g package` | `npm uninstall -g` | Uninstall global package |
-| `pui package` | `pnpm remove` | Remove with pnpm |
-| `yui package` | `yarn remove` | Remove with yarn |
+| Alias          | Command                                                          | Description                  |
+| -------------- | ---------------------------------------------------------------- | ---------------------------- |
+| `dev`          | `npm run dev`                                                    | Run dev script               |
+| `ni`           | `npm install`                                                    | Install packages             |
+| `nr script`    | `npm run`                                                        | Run npm script               |
+| `nrb`          | `npm run build`                                                  | Build project                |
+| `nrt`          | `npm run test`                                                   | Run tests                    |
+| `nrs`          | `npm run start`                                                  | Start project                |
+| `od`           | `npm outdated`                                                   | Show outdated packages       |
+| `nrun`         | `npm run`                                                        | Run npm script (alternative) |
+| `pi`           | `pnpm install`                                                   | Install with pnpm            |
+| `pr script`    | `pnpm run`                                                       | Run with pnpm                |
+| `pm`           | `pnpm`                                                           | pnpm shortcut                |
+| `format`       | `npm run format`                                                 | Format code                  |
+| `clean`        | `npm run clean`                                                  | Clean project                |
+| `start`        | `npm start`                                                      | Start application            |
+| `nuke`         | `rm -rf node_modules package-lock.json pnpm-lock.yaml yarn.lock` | Remove all lock files        |
+| `reinstall`    | `nuke && npm install`                                            | Clean reinstall              |
+| `npmls`        | `npm ls --depth=0`                                               | List top-level packages      |
+| `nu package`   | `npm uninstall`                                                  | Uninstall package            |
+| `nu-g package` | `npm uninstall -g`                                               | Uninstall global package     |
+| `pui package`  | `pnpm remove`                                                    | Remove with pnpm             |
+| `yui package`  | `yarn remove`                                                    | Remove with yarn             |
 
 ### System Aliases
 
-| Alias | Command | Description |
-|-------|---------|-------------|
-| `ports` | `sudo lsof -i -P -n \| grep LISTEN` | Show listening ports |
-| `ports-tcp` | `sudo lsof -nP -iTCP -sTCP:LISTEN` | Show TCP ports |
-| `update` | `sudo apt update && sudo apt upgrade -y` | Update system |
-| `please` | `sudo $(fc -ln -1)` | Rerun last command with sudo |
-| `c` | `clear` | Clear screen |
-| `h` | `history` | Show history |
-| `j` | `jobs -l` | Show jobs |
-| `myip` | `curl ifconfig.me` | Show public IP |
-| `iplocal` | `hostname -I` | Show local IP |
-| `pingg` | `ping google.com` | Ping Google |
-| `pingc` | `ping cloudflare.com` | Ping Cloudflare |
-| `flushdns` | `sudo systemd-resolve --flush-caches` | Flush DNS cache |
-| `mem` | `free -h` | Show memory usage |
-| `cpu` | `lscpu` | Show CPU info |
-| `temp` | `sensors` | Show temperature |
-| `clsall` | `clear && printf "\e[3J"` | Clear scrollback |
-| `now` | `date +"%Y-%m-%d %H:%M:%S"` | Current timestamp |
-| `today` | `date +"%A, %d %B %Y"` | Today's date |
+| Alias       | Command                                  | Description                  |
+| ----------- | ---------------------------------------- | ---------------------------- |
+| `ports`     | `sudo lsof -i -P -n \| grep LISTEN`      | Show listening ports         |
+| `ports-tcp` | `sudo lsof -nP -iTCP -sTCP:LISTEN`       | Show TCP ports               |
+| `update`    | `sudo apt update && sudo apt upgrade -y` | Update system                |
+| `please`    | `sudo $(fc -ln -1)`                      | Rerun last command with sudo |
+| `c`         | `clear`                                  | Clear screen                 |
+| `cls`       | `clear`                                  | Clear screen (alternative)   |
+| `h`         | `history`                                | Show history                 |
+| `j`         | `jobs -l`                                | Show jobs                    |
+| `myip`      | `curl ifconfig.me`                       | Show public IP               |
+| `iplocal`   | `hostname -I`                            | Show local IP                |
+| `pingg`     | `ping google.com`                        | Ping Google                  |
+| `pingc`     | `ping cloudflare.com`                    | Ping Cloudflare              |
+| `flushdns`  | `sudo systemd-resolve --flush-caches`    | Flush DNS cache              |
+| `mem`       | `free -h`                                | Show memory usage            |
+| `cpu`       | `lscpu`                                  | Show CPU info                |
+| `temp`      | `sensors`                                | Show temperature             |
+| `clsall`    | `clear && printf "\e[3J"`                | Clear scrollback             |
+| `now`       | `date +"%Y-%m-%d %H:%M:%S"`              | Current timestamp            |
+| `today`     | `date +"%A, %d %B %Y"`                   | Today's date                 |
 
 ---
 

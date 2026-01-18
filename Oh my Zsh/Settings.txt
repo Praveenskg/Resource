@@ -78,7 +78,6 @@ elif command -v bat >/dev/null 2>&1; then
   alias bat='bat'
 fi
 
-alias tree='tree'  # fallback; overwritten above if eza exists
 alias md='mkdir -p'
 alias rd='rm -rf'
 alias f='find . -type f -name'     # usage: f "*.js"
@@ -142,6 +141,14 @@ alias dimg='docker images'
 alias dnet='docker network ls'
 alias dlogs='docker logs -f'
 alias dbash='docker exec -it'
+alias mongo-docker='echo "🐳 Switching to Docker Mongo (27017)" && \
+sudo systemctl stop mongod && \
+docker compose --profile db up -d'
+alias mongo-local='echo "🟢 Switching to Local Mongo (27017)" && \
+docker compose --profile db down && \
+sudo systemctl start mongod'
+alias mongo-check='echo "🔎 Mongo on 27017:" && sudo lsof -i :27017'
+alias mongo-shell='mongosh mongodb://localhost:27017'
 
 # --- NPM / PNPM ---
 alias dev='npm run dev'
@@ -324,14 +331,6 @@ if [ -s "$NVM_DIR/bash_completion" ]; then
 fi
 
 
-# pnpm
-export PNPM_HOME="/home/praveen-singh/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
 export PATH="$HOME/.local/bin:$PATH"
 
 # Add any user PATH additions below
@@ -343,3 +342,12 @@ export PATH="$HOME/.local/bin:$PATH"
 # ========================
 # End of file
 # ========================
+
+
+# pnpm
+export PNPM_HOME="/home/praveen-singh/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
